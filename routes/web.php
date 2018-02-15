@@ -80,3 +80,4 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('/laravel-filemanager/upload', '\Unisharp\Laravelfilemanager\controllers\UploadController@upload');
     });
 });
+
