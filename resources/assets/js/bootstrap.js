@@ -37,12 +37,12 @@ window.axios.defaults.headers.common = {
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
  */
-
-import Echo from "laravel-echo";
+import Pusher from "pusher-js"
+import Echo from "laravel-echo"
 
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: Laravel.pusherKey,
-    cluster: Laravel.pusherCluster,
+    key: '6a7820bf092c966aac00',
+    cluster: 'ap1',
     encrypted: true
 });
