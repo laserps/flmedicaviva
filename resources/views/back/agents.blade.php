@@ -58,7 +58,7 @@
             </div>
         </div>
     </section>
-    
+
     <!-- Modal Add -->
     <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -107,7 +107,7 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>                 
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
@@ -167,7 +167,7 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>                 
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
@@ -418,4 +418,3 @@
     });
 </script>
 @endsection
-
