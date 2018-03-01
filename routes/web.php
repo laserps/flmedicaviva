@@ -22,6 +22,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/redirect', 'FacebookAuthController@redirect');
 Route::get('/callback', 'FacebookAuthController@callback');
 
+Route::get('/logout', function(){
+    Auth::guard('admin')->logout();
+    return redirect()->back();
+});
+
 //Admin Login Register
 Route::group(['prefix' => 'admin'], function (){
     Route::get('register', function () {
@@ -75,9 +80,13 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/stp/contact','Admin\StaticpageController@contact');
         Route::get('/stp/howbuy','Admin\StaticpageController@howbuy');
         Route::get('/stp/payment','Admin\StaticpageController@payment');
+        Route::post('/stp/update','Admin\StaticpageController@update');
+        
 
         Route::get('/laravel-filemanager', '\Unisharp\Laravelfilemanager\controllers\LfmController@show');
         Route::post('/laravel-filemanager/upload', '\Unisharp\Laravelfilemanager\controllers\UploadController@upload');
     });
 });
+
+Route::post('/uploadfile','UploadController@upload');
 

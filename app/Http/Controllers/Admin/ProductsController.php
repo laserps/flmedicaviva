@@ -17,6 +17,9 @@ class ProductsController extends Controller
     {
         $data['title'] = 'สินค้า';
         $data['menu'] = 'products';
+        $data['Units'] = \App\Models\Units::get();
+        $data['Categories'] = \App\Models\Categories::get();
+        $data['menu'] = 'products';
 
         return view('back.products',$data);
     }

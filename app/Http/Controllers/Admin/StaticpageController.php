@@ -17,28 +17,32 @@ class StaticpageController extends Controller
     {
         $data['title'] = 'เกี่ยวกับเรา';
         $data['menu'] = 'stp_aboutus';
-        return view('back.setting.stp_aboutus',$data);
+        $data['stpvalue'] = \App\Models\StaticPage::where('name',$data['title'])->first();
+        return view('back.setting.fetchPage',$data);
     }
 
     public function contact()
     {
         $data['title'] = 'ติดต่อเรา';
         $data['menu'] = 'stp_contact';
-        return view('back.setting.stp_contact',$data);
+        $data['stpvalue'] = \App\Models\StaticPage::where('name',$data['title'])->first();
+        return view('back.setting.fetchPage',$data);
     }
 
     public function howbuy()
     {
         $data['title'] = 'วิธีการซื้อสินค้า';
         $data['menu'] = 'stp_howbuy';
-        return view('back.setting.stp_howbuy',$data);
+        $data['stpvalue'] = \App\Models\StaticPage::where('name',$data['title'])->first();
+        return view('back.setting.fetchPage',$data);
     }
 
     public function payment()
     {
         $data['title'] = 'วิธีการชำระเงิน';
         $data['menu'] = 'stp_payment';
-        return view('back.setting.stp_payment',$data);
+        $data['stpvalue'] = \App\Models\StaticPage::where('name',$data['title'])->first();
+        return view('back.setting.fetchPage',$data);
     }
 
     /**
@@ -59,25 +63,7 @@ class StaticpageController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        $data['created_at'] = date('Y-m-d H:i:s');
 
-        \DB::beginTransaction();
-        try {
-            if( \App\Models\Units::insert($data) ){
-                \DB::commit();
-                $return['type'] = 'success';
-                $return['text'] = 'สำเร็จ';
-            }else{
-                throw new $e;
-            }
-        } catch (\Exception $e){
-            \DB::rollBack();
-            $return['type'] = 'error';
-            $return['text'] = 'ไม่สำเร็จ'."\n".$e->getMessage();
-        }
-        $return['title'] = 'เพิ่มข้อมูล';
-        return $return;
     }
 
     /**
@@ -109,27 +95,52 @@ class StaticpageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request,$id=null)
     {
-        $id = $request['category_id'];
-        unset($request['category_id']);
-        $data = $request->all();
-        \DB::beginTransaction();
-        try {
-            if( \App\Models\Units::where("category_id",$id)->update($data) ){
-                \DB::commit();
-                $return['type'] = 'success';
-                $return['text'] = 'สำเร็จ';
-            }else{
-                throw new $e;
+        
+        $check =  \App\Models\StaticPage::where('name',$request->name)->count();
+        if($check>0){
+            $name = $request['name'];
+            $data = $request->all();
+            \DB::beginTransaction();
+            try {
+                if( \App\Models\StaticPage::where("name",$name)->update($data) ){
+                    \DB::commit();
+                    $return['type'] = 'success';
+                    $return['text'] = 'สำเร็จ';
+                }else{
+                    throw new $e;
+                }
+            }catch (\Exception $e){
+                \DB::rollBack();
+                $return['type'] = 'error';
+                $return['text'] = 'ไม่สำเร็จ'."\n".$e->getMessage();
             }
-        }catch (\Exception $e){
-            \DB::rollBack();
-            $return['type'] = 'error';
-            $return['text'] = 'ไม่สำเร็จ'."\n".$e->getMessage();
+            $return['title'] = 'แก้ไขข้อมูล';
+            return $return;
+        }else{
+            $data = $request->all();
+            $data['created_at'] = date('Y-m-d H:i:s');
+    
+            \DB::beginTransaction();
+            try {
+                if( \App\Models\StaticPage::insert($data) ){
+                    \DB::commit();
+                    $return['type'] = 'success';
+                    $return['text'] = 'สำเร็จ';
+                }else{
+                    throw new $e;
+                }
+            } catch (\Exception $e){
+                \DB::rollBack();
+                $return['type'] = 'error';
+                $return['text'] = 'ไม่สำเร็จ'."\n".$e->getMessage();
+            }
+            $return['title'] = 'เพิ่มข้อมูล';
+            return $return;
         }
-        $return['title'] = 'แก้ไขข้อมูล';
-        return $return;
+
+
     }
 
     /**

@@ -22,7 +22,7 @@
                     <a href="{{url('/admin/agents')}}"><i class="fa fa-users"></i> ตัวแทนจำหน่าย </a>
                 </li>
 
-                <li>
+                <li class="open">
                     <a href="">
                         <i class="fa fa-sitemap"></i> ตั้งค่า
                         <i class="fa arrow"></i>
@@ -45,7 +45,7 @@
                     </ul>
                 </li>
 
-                    <li>
+                    <li class="open">
                         <a href="">
                             <i class="fa fa-sitemap"></i> ตั้งค่าหน้าต่างแสดงผล
                             <i class="fa arrow"></i>

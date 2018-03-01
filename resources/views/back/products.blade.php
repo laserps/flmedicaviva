@@ -5,6 +5,14 @@
 @endsection
 
 @section('csstop')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="{{asset('global\bootstrap\dist\css\bootstrap.css')}}" rel="stylesheet"> -->
+<link rel="stylesheet" href="{{asset('global\bootstrap-fileinput-master\css\fileinput.css')}}">
+<link href="{{asset('global\fontawesome-free-5.0.6\web-fonts-with-css\css\fontawesome-all.min.css')}}" media="all" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="{{asset('global\bootstrap-fileinput-master\themes\explorer-fa\theme.css')}}">
+
 @endsection
 
 @section('content')
@@ -64,7 +72,9 @@
     <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <form id="formAdd">
+
+                <form id="formAdd" enctype="multipart/form-data">
+                    {{ csrf_field() }}
                     <div class="modal-header">
                         <h5>เพิ่ม{{$title}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -72,6 +82,15 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="file" class="col-sm-2 col-form-label">รูปภาพ{{$title}}</label>
+                            <div class="col-sm-10">
+                                <br>
+                                <div class="file-loading">
+                                    <input id="file-0a" class="file" type="file"  multiple data-min-file-count="1">
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label for="product_name" class="col-sm-2 col-form-label">ชื่อ{{$title}}</label>
                             <div class="col-sm-10">
@@ -94,11 +113,11 @@
                             <label for="unit_id" class="col-sm-2 col-form-label">หน่วยนับ{{$title}}</label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <select class="form-control" name="unit_id" id="">
+                                    <select class="form-control" name="unit_id" id="unit_id">
                                         <option value="">เลือกหน่วยนับ{{$title}}</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        @foreach($Units as $unit)
+                                        <option value="{{ $unit->unit_id }}">{{ $unit->unit_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -107,11 +126,11 @@
                             <label for="category_id" class="col-sm-2 col-form-label">ประเภท{{$title}}</label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <select class="form-control" name="category_id" id="">
+                                    <select class="form-control" name="category_id" id="category_id">
                                         <option value="">เลือกประเภท{{$title}}</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        @foreach($Categories as $category)
+                                        <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -182,9 +201,9 @@
                                 <div class="form-group">
                                     <select class="form-control" name="unit_id" id="unit_id">
                                         <option value="">เลือกหน่วยนับ{{$title}}</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        @foreach($Units as $unit)
+                                        <option value="{{ $unit->unit_id }}">{{ $unit->unit_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -195,9 +214,9 @@
                                 <div class="form-group">
                                     <select class="form-control" name="category_id" id="category_id">
                                         <option value="">เลือกประเภท{{$title}}</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        @foreach($Categories as $category)
+                                        <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -236,6 +255,27 @@
 @endsection
 
 @section('jsbottom')
+<!-- <script src="{{asset('global\bootstrap-fileinput-master\js\fileinput.min.js')}}"></script>
+<script src="{{asset('global\bootstrap-fileinput-master\themes\explorer\theme.min.js')}}"></script> -->
+
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+    <script src="{{asset('global\bootstrap-fileinput-master\js\plugins\sortable.js')}}" type="text/javascript"></script>
+    <script src="{{asset('global\bootstrap-fileinput-master\js\fileinput.min.js')}}"></script>
+
+    <script src="{{asset('global\bootstrap-fileinput-master\js\locales\th.js')}}" type="text/javascript"></script>
+    <!-- <script src="{{asset('global\bootstrap-fileinput-master\themes\explorer-fa\theme.js')}}" type="text/javascript"></script> -->
+    <script src="{{asset('global\bootstrap-fileinput-master\themes\fa\theme.js')}}" type="text/javascript"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script> -->
+    <script src="{{asset('global\bootstrap\dist\js\bootstrap.min.js')}}" type="text/javascript"></script> 
+
+<script>
+    $('#file-0a').fileinput({
+        theme: 'fa',
+        language: 'th',
+        uploadUrl: "{{url('/uploadfile')}}",
+        allowedFileExtensions: ['jpg', 'png', 'gif']
+    });
+</script>
 <script type="text/javascript">
     {{-- Start  Add  --}}
     $( ".add-data" ).click(function() {
