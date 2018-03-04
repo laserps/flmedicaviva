@@ -13,7 +13,7 @@
         <nav class="menu">
             <ul class="sidebar-menu metismenu" id="sidebar-menu">
                 <li class="active">
-                    <a href="#"><i class="fa fa-home"></i> Dashboard </a>
+                    <a href="{{url('/admin/po')}}"><i class="fa fa-home"></i> คำสั่งซื้อสินค้า </a>
                 </li>
                 <li class="">
                     <a href="{{url('/admin/member')}}"><i class="fa fa-user"></i> สมาชิก </a>

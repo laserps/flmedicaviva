@@ -5,14 +5,11 @@
 @endsection
 
 @section('csstop')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
-<!-- <link href="{{asset('global\bootstrap\dist\css\bootstrap.css')}}" rel="stylesheet"> -->
-<link rel="stylesheet" href="{{asset('global\bootstrap-fileinput-master\css\fileinput.css')}}">
-<link href="{{asset('global\fontawesome-free-5.0.6\web-fonts-with-css\css\fontawesome-all.min.css')}}" media="all" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" href="{{asset('global\bootstrap-fileinput-master\themes\explorer-fa\theme.css')}}">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{--  <link rel="stylesheet" href="{{asset('global/bootstrap/dist/css/bootstrap.css')}}">  --}}
+    <script src="{{asset('global/dropzone/dropzone.js')}}"></script>
+    <link href="{{asset('global/dropzone/dropzone.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('global/orakuploader/orakuploader.css')}}">
 @endsection
 
 @section('content')
@@ -34,17 +31,6 @@
                         </div>
                         <section class="example">
                             <div class="table-flip-scroll">
-                                {{--  <table class="table table-striped table-bordered table-hover flip-content">
-                                    <thead class="flip-header">
-                                        <tr>
-                                            <th>Rendering engine</th>
-                                            <th>Browser</th>
-                                            <th>Platform(s)</th>
-                                            <th>Engine version</th>
-                                            <th>CSS grade</th>
-                                        </tr>
-                                    </thead>
-                                </table>  --}}
                                 <table class="table table-striped table-bordered table-hover flip-content table-sm" id="datatableAll">
                                     <thead>
                                         <tr>
@@ -73,22 +59,22 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
 
-                <form id="formAdd" enctype="multipart/form-data">
-                    {{ csrf_field() }}
+
                     <div class="modal-header">
                         <h5>เพิ่ม{{$title}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    <form id="formAdd" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group row">
                             <label for="file" class="col-sm-2 col-form-label">รูปภาพ{{$title}}</label>
                             <div class="col-sm-10">
-                                <br>
-                                <div class="file-loading">
-                                    <input id="file-0a" class="file" type="file"  multiple data-min-file-count="1">
-                                </div>
+                                <div id="photo" orakuploader="on"></div>
+                            </div>
+                            <div class="col-sm-10">
+
                             </div>
                         </div>
                         <div class="form-group row">
@@ -178,6 +164,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
+                            <label for="product_name" class="col-sm-2 col-form-label">รูปภาพ{{$title}}</label>
+                            <div class="col-sm-10">
+                                <div id="editphoto" orakuploader="on"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="product_name" class="col-sm-2 col-form-label">ชื่อ{{$title}}</label>
                             <div class="col-sm-10">
                             <input type="ชื่อ{{$title}}" class="form-control" name="product_name" id="product_name" placeholder="ชื่อ{{$title}}">
@@ -255,26 +247,64 @@
 @endsection
 
 @section('jsbottom')
-<!-- <script src="{{asset('global\bootstrap-fileinput-master\js\fileinput.min.js')}}"></script>
-<script src="{{asset('global\bootstrap-fileinput-master\themes\explorer\theme.min.js')}}"></script> -->
-
-    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
-    <script src="{{asset('global\bootstrap-fileinput-master\js\plugins\sortable.js')}}" type="text/javascript"></script>
-    <script src="{{asset('global\bootstrap-fileinput-master\js\fileinput.min.js')}}"></script>
-
-    <script src="{{asset('global\bootstrap-fileinput-master\js\locales\th.js')}}" type="text/javascript"></script>
-    <!-- <script src="{{asset('global\bootstrap-fileinput-master\themes\explorer-fa\theme.js')}}" type="text/javascript"></script> -->
-    <script src="{{asset('global\bootstrap-fileinput-master\themes\fa\theme.js')}}" type="text/javascript"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script> -->
-    <script src="{{asset('global\bootstrap\dist\js\bootstrap.min.js')}}" type="text/javascript"></script> 
-
-<script>
-    $('#file-0a').fileinput({
-        theme: 'fa',
-        language: 'th',
-        uploadUrl: "{{url('/uploadfile')}}",
-        allowedFileExtensions: ['jpg', 'png', 'gif']
+{{--  <script src="{{asset('global/bootstrap/dist/js/bootstrap.min.js')}}" type="text/javascript"></script>  --}}
+{{--  <script src="{{asset('global/clipboard/dist/clipboard.min.js')}}"></script>  --}}
+{{--  <script>
+    Dropzone.options.myDropzone = {
+        paramName: 'file',
+        maxFilesize: 5, // MB
+        maxFiles: 20,
+        acceptedFiles: ".jpeg,.jpg,.png,.gif",
+        init: function() {
+            this.on("success", function(file, response) {
+                var a = document.createElement('span');
+                a.className = "thumb-url btn btn-primary";
+                a.setAttribute('data-clipboard-text','{{url("/uploads")}}/'+response);
+                a.innerHTML = "copy url";
+                file.previewTemplate.appendChild(a);
+            });
+        }
+    };
+</script>  --}}
+{{--  <script>
+    $('.thumb-url').tooltip({
+        trigger: 'click',
+        placement: 'bottom'
     });
+
+    function setTooltip(btn, message) {
+        $(btn).tooltip('hide')
+            .attr('data-original-title', message)
+            .tooltip('show');
+    }
+
+    function hideTooltip(btn) {
+        setTimeout(function() {
+            $(btn).tooltip('hide');
+        }, 500);
+    }
+
+    var clipboard = new Clipboard('.thumb-url');
+
+    clipboard.on('success', function(e) {
+        e.clearSelection();
+        setTooltip(e.trigger, 'Copied!');
+        hideTooltip(e.trigger);
+    });
+
+    clipboard.on('error', function(e) {
+        e.clearSelection();
+        setTooltip(e.trigger, 'Failed');
+        hideTooltip(e.trigger);
+    });
+</script>  --}}
+<script>
+    // $('#file-0a').fileinput({
+    //     theme: 'fa',
+    //     language: 'th',
+    //     uploadUrl: "{{url('/uploadfile')}}",
+    //     allowedFileExtensions: ['jpg', 'png', 'gif']
+    // });
 </script>
 <script type="text/javascript">
     {{-- Start  Add  --}}
@@ -344,6 +374,7 @@
             url : url+"/admin/products/"+id,
             dataType : 'json'
         }).done(function(rec){
+            editphoto(rec.product_image);
             $( "#product_id" ).val( id );
             $( "#product_name" ).val( rec.product_name );
             $( "#category_id" ).val( rec.category_id );
@@ -512,5 +543,61 @@
         }
     });
 </script>
-@endsection
+<script src="{{asset('global/orakuploader/jquery-ui.min.js')}}"></script>
+<script src="{{asset('global/orakuploader/orakuploader.js')}}"></script>
+<script>
+    $('#photo').orakuploader({
+        orakuploader_path         : url+'/',
+        orakuploader_ckeditor         : true,
+        orakuploader_use_dragndrop            : true,
+        orakuploader_use_sortable   : false,
+        orakuploader_main_path : 'uploads/temp/',
+        orakuploader_thumbnail_path : 'uploads/temp/',
+        orakuploader_thumbnail_real_path : asset+'uploads/temp/',
+        orakuploader_loader_image       : asset+'images/loader.gif',
+        orakuploader_no_image       : asset+'images/no-image.jpg',
+        orakuploader_add_label       : 'เลือกรูปภาพ',
+        orakuploader_use_rotation: true,
+        orakuploader_maximum_uploads : 1,
+        orakuploader_hide_on_exceed : true,
+    });
 
+    function editphoto(path){
+        $('#editphoto').parent().html('<div id="editphoto" orakuploader="on"></div>');
+        if(path){
+            $('#editphoto').orakuploader({
+                orakuploader_path         : url+'/',
+                orakuploader_ckeditor         : true,
+                orakuploader_use_dragndrop            : true,
+                orakuploader_use_sortable   : true,
+                orakuploader_main_path : 'uploads/temp/',
+                orakuploader_thumbnail_path : 'uploads/temp/',
+                orakuploader_thumbnail_real_path : asset+'uploads/temp/',
+                orakuploader_loader_image       : asset+'images/loader.gif',
+                orakuploader_no_image       : asset+'images/no-image.jpg',
+                orakuploader_add_label       : 'เลือกรูปภาพ',
+                orakuploader_use_rotation: true,
+                orakuploader_hide_on_exceed : true, 
+                orakuploader_maximum_uploads : 0,
+                orakuploader_attach_images: [path],
+            });
+        }else{
+            $('#editphoto').orakuploader({
+                orakuploader_path         : url+'/',
+                orakuploader_ckeditor         : true,
+                orakuploader_use_dragndrop            : true,
+                orakuploader_use_sortable   : true,
+                orakuploader_main_path : 'uploads/temp/',
+                orakuploader_thumbnail_path : 'uploads/temp/',
+                orakuploader_thumbnail_real_path : asset+'uploads/temp/',
+                orakuploader_loader_image       : asset+'images/loader.gif',
+                orakuploader_no_image       : asset+'images/no-image.jpg',
+                orakuploader_add_label       : 'เลือกรูปภาพ',
+                orakuploader_use_rotation: true,
+                orakuploader_hide_on_exceed : true, 
+                orakuploader_maximum_uploads : 1,
+            });
+        }
+    }
+</script>
+@endsection

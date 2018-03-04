@@ -47,6 +47,20 @@ Route::group(['middleware' => 'admin'], function () {
             return view('back.index');
         });
 
+        //product order controller
+        Route::get('/po/dataTable','Admin\ProductOrderController@dataTable');
+        Route::post('/po/update','Admin\ProductOrderController@update');
+        Route::post('/po/changeStatus','Admin\ProductOrderController@changeStatus');
+        Route::post('/po/delete','Admin\ProductOrderController@destroy');
+        Route::resource('/po','Admin\ProductOrderController');
+
+        //member controller
+        Route::get('/member/dataTable','Admin\MembersController@dataTable');
+        Route::post('/member/update','Admin\MembersController@update');
+        Route::post('/member/changeStatus','Admin\MembersController@changeStatus');
+        Route::post('/member/delete','Admin\MembersController@destroy');
+        Route::resource('/member','Admin\MembersController');
+
         //product controller
         Route::get('/products/dataTable','Admin\ProductsController@dataTable');
         Route::post('/products/update','Admin\ProductsController@update');
@@ -88,5 +102,7 @@ Route::group(['middleware' => 'admin'], function () {
     });
 });
 
-Route::post('/uploadfile','UploadController@upload');
+Route::post('/admin/upload' , 'UploadController@upload');
 
+//OrakUploader
+Route::any('/upload_file', 'OrakController@upload_file');

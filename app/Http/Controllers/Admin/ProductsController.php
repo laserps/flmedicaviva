@@ -77,7 +77,9 @@ class ProductsController extends Controller
     {
         $data = $request->all();
         $data['created_at'] = date('Y-m-d H:i:s');
-
+        $photo = $request->photo;
+        if(isset($photo[0])){   $data['product_image'] = $photo[0]; }
+        unset($data['photo']);
         \DB::beginTransaction();
         try {
             if( \App\Models\Products::insert($data) ){
@@ -130,6 +132,9 @@ class ProductsController extends Controller
         $id = $request['product_id'];
         unset($request['product_id']);
         $data = $request->all();
+        $photo = $request->editphoto;
+        if(isset($photo[0])){   $data['product_image'] = $photo[0]; }
+        unset($data['editphoto']);
         \DB::beginTransaction();
         try {
             if( \App\Models\Products::where("product_id",$id)->update($data) ){

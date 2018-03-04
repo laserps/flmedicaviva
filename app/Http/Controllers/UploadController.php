@@ -3,74 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class UploadController extends Controller
 {
-    public function upload(Request $request){
-        return $request;
-        // upload.php
-        // 'images' refers to your file input name attribute
-        if (empty($_FILES['images'])) {
-            echo json_encode(['error'=>'No files found for upload.']); 
-            // or you can throw an exception 
-            return; // terminate
+    public function dropzoneStore(Request $request)
+    {
+        $image = $request->file('file');
+        $imageName = time().$image->getClientOriginalName();
+        $image->move(public_path('images'),$imageName);
+        return response()->json(['success'=>$imageName]);
+    }
+
+    public function upload(Request $request)
+    {
+        // Creating a new time instance, we'll use it to name our file and declare the path
+        $time = Carbon::now();
+        // Requesting the file from the form
+        $image = $request->file('file');
+        // Getting the extension of the file 
+        $extension = $image->getClientOriginalExtension();
+        // Creating the directory, for example, if the date = 18/10/2017, the directory will be 2017/10/
+        $directory = date_format($time, 'Y') . '/' . date_format($time, 'm');
+        // Creating the file name: random string followed by the day, random number and the hour
+        $filename = str_random(5).date_format($time,'d').rand(1,9).date_format($time,'h').".".$extension;
+        // This is our upload main function, storing the image in the storage that named 'public'
+        $upload_success = $image->storeAs($directory, $filename, 'public');
+        // If the upload is successful, return the name of directory/filename of the upload.
+        if ($upload_success) {
+            return response()->json($upload_success, 200);
         }
-
-        // get the files posted
-        $images = $_FILES['images'];
-
-        // get user id posted
-        $userid = empty($_POST['userid']) ? '' : $_POST['userid'];
-
-        // get user name posted
-        $username = empty($_POST['username']) ? '' : $_POST['username'];
-
-        // a flag to see if everything is ok
-        $success = null;
-
-        // file paths to store
-        $paths= [];
-
-        // get file names
-        $filenames = $images['name'];
-
-        // loop and process files
-        for($i=0; $i < count($filenames); $i++){
-            $ext = explode('.', basename($filenames[$i]));
-            $target = "uploads" . DIRECTORY_SEPARATOR . md5(uniqid()) . "." . array_pop($ext);
-            if(move_uploaded_file($images['tmp_name'][$i], $target)) {
-                $success = true;
-                $paths[] = $target;
-            } else {
-                $success = false;
-                break;
-            }
+        // Else, return error 400
+        else {
+            return response()->json('error', 400);
         }
-
-        // check and process based on successful status 
-        if ($success === true) {
-            // call the function to save all data to database
-            // code for the following function `save_data` is not 
-            // mentioned in this example
-            save_data($userid, $username, $paths);
-
-            // store a successful response (default at least an empty array). You
-            // could return any additional response info you need to the plugin for
-            // advanced implementations.
-            $output = [];
-            // for example you can get the list of files uploaded this way
-            // $output = ['uploaded' => $paths];
-        } elseif ($success === false) {
-            $output = ['error'=>'Error while uploading images. Contact the system administrator'];
-            // delete any uploaded files
-            foreach ($paths as $file) {
-                unlink($file);
-            }
-        } else {
-            $output = ['error'=>'No files were processed.'];
-        }
-
-        // return a json encoded response for plugin to process successfully
-        echo json_encode($output);
     }
 }

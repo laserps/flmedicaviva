@@ -52,6 +52,7 @@
         <!-- Scripts -->
         <script>
             var url = "{{ url('/') }}";
+            var asset = "{{ asset('') }}";
         </script>
         
         <!-- jquery -->
