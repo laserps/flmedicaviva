@@ -75,6 +75,13 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('/agents/delete','Admin\AgentsController@destroy');
         Route::resource('/agents','Admin\AgentsController');
 
+        //user controller
+        Route::get('/users/dataTable','Admin\UsersController@dataTable');
+        Route::post('/users/update','Admin\UsersController@update');
+        Route::post('/users/changeStatus','Admin\UsersController@changeStatus');
+        Route::post('/users/delete','Admin\UsersController@destroy');
+        Route::resource('/users','Admin\UsersController');
+
         //categories controller
         Route::get('/categories/dataTable','Admin\CategoriesController@dataTable');
         Route::post('/categories/update','Admin\CategoriesController@update');
@@ -88,6 +95,13 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('/units/changeStatus','Admin\UnitsController@changeStatus');
         Route::post('/units/delete','Admin\UnitsController@destroy');
         Route::resource('/units','Admin\UnitsController');
+
+        //orders controller
+        Route::get('/orders/dataTable','OrdersController@dataTable');
+        Route::post('/orders/update','OrdersController@update');
+        Route::post('/orders/changeStatus','OrdersController@changeStatus');
+        Route::post('/orders/delete','OrdersController@destroy');
+        Route::resource('/orders','OrdersController');
 
         //staticpage controller
         Route::get('/stp/aboutus','Admin\StaticpageController@aboutus');

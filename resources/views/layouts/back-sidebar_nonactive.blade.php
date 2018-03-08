@@ -8,17 +8,17 @@
                     <span class="l l3"></span>
                     <span class="l l4"></span>
                     <span class="l l5"></span>
-                </div> medivavivacentre </div>
+                </div> MEDICAVIVACENTRE </div>
         </div>
         <nav class="menu">
             <ul class="sidebar-menu metismenu" id="sidebar-menu">
-                <li class="{{$menu=='orders'?'active':''}}">
-                    <a href="{{url('/admin/orders')}}"><i class="fa fa-home"></i> คำสั่งซื้อสินค้า </a>
+                <li >
+                    <a href="{{url('/admin/po')}}"><i class="fa fa-home"></i> คำสั่งซื้อสินค้า </a>
                 </li>
-                <li class="{{$menu=='users'?'active':''}}">
+                <li class="active">
                     <a href="{{url('/admin/users')}}"><i class="fa fa-user"></i> สมาชิก </a>
                 </li>
-                <li class="{{$menu=='agents'?'active':''}}">
+                <li class="">
                     <a href="{{url('/admin/agents')}}"><i class="fa fa-users"></i> ตัวแทนจำหน่าย </a>
                 </li>
 
@@ -28,13 +28,13 @@
                         <i class="fa arrow"></i>
                     </a>
                     <ul class="sidebar-nav">
-                        <li class="{{$menu=='products'?'active':''}}">
+                        <li class="">
                                 <a href="{{url('/admin/products')}}"><i class=""></i> สินค้า </a>
                         </li>
-                        <li class="{{$menu=='categories'?'active':''}}">
+                        <li class="">
                                 <a href="{{url('/admin/categories')}}"><i class=""></i> ประเภทสินค้า </a>
                         </li>
-                        <li class="{{$menu=='units'?'active':''}}">
+                        <li class="">
                             <a href="{{url('/admin/units')}}"><i class=""></i> หน่วยนับสินค้า </a>
                         </li>
 
@@ -51,16 +51,16 @@
                             <i class="fa arrow"></i>
                         </a>
                         <ul class="sidebar-nav">
-                            <li class="{{$menu=='stp_aboutus'?'active':''}}">
+                            <li class="">
                                     <a href="{{url('/admin/stp/aboutus')}}"><i class=""></i> เกี่ยวกับเรา </a>
                             </li>
-                            <li class="{{$menu=='stp_contact'?'active':''}}">
+                            <li class="">
                                     <a href="{{url('/admin/stp/contact')}}"><i class=""></i> ติดต่อเรา </a>
                             </li>
-                            <li class="{{$menu=='stp_howbuy'?'active':''}}">
+                            <li class="">
                                 <a href="{{url('/admin/stp/howbuy')}}"><i class=""></i> วิธีการสั่งซื้อสินค้า </a>
                             </li>
-                            <li class="{{$menu=='stp_payment'?'active':''}}">
+                            <li class="">
                                 <a href="{{url('/admin/stp/payment')}}"><i class=""></i> วิธีการชำระเงิน </a>
                             </li>
                         </ul>

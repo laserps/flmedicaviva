@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DataTables;
 
-class ProductsController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,21 +15,18 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $data['title'] = 'สินค้า';
-        $data['menu'] = 'products';
-        $data['Units'] = \App\Models\Units::get();
-        $data['Categories'] = \App\Models\Categories::get();
-        $data['menu'] = 'products';
+        $data['title'] = 'สมาชิก';
+        $data['menu'] = 'users';
 
-        return view('back.products',$data);
+        return view('back.user',$data);
     }
 
     public function dataTable(){//Datatable
-        $result = \App\Models\Products::select();
+        $result = \App\User::select();
         return Datatables::of($result)
         ->editColumn('status',function($rec){
 
-            $str ='<select name="status" onchange="changeStatus('.$rec->product_id.',this.value);">';
+            $str ='<select name="status" onchange="changeStatus('.$rec->id.',this.value);">';
             if($rec->status=="T"){
                 $str .='<option value="T" selected>ทำงาน</option>';
                 $str .='<option value="F">ไม่ทำงาน</option>';
@@ -43,11 +40,11 @@ class ProductsController extends Controller
         })
         ->addColumn('action',function($rec){
             $str = "";
-            $str .= ' <button class="btn btn-warning btn-sm edit-data" data-id="'.$rec->product_id.'">
+            $str .= ' <button class="btn btn-warning btn-sm edit-data" data-id="'.$rec->id.'">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข
                     </button> ';
                     
-            $str .= ' <button class="btn  btn-danger btn-sm delete-data" data-id="'.$rec->product_id.'">
+            $str .= ' <button class="btn  btn-danger btn-sm delete-data" data-id="'.$rec->id.'">
                         <i class="fa fa-trash" aria-hidden="true"></i> ลบ
                     </button> ';
             return $str;
@@ -76,20 +73,19 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $data['password'] = bcrypt($request->password);
         $data['created_at'] = date('Y-m-d H:i:s');
-        $photo = $request->photo;
-        if(isset($photo[0])){   $data['product_image'] = $photo[0]; }
-        unset($data['photo']);
+
         \DB::beginTransaction();
         try {
-            if( \App\Models\Products::insert($data) ){
+            if( \App\User::insert($data) ){
                 \DB::commit();
                 $return['type'] = 'success';
                 $return['text'] = 'สำเร็จ';
             }else{
                 throw new $e;
             }
-        } catch (\Exception $e){
+        }catch (\Exception $e){
             \DB::rollBack();
             $return['type'] = 'error';
             $return['text'] = 'ไม่สำเร็จ'."\n".$e->getMessage();
@@ -106,7 +102,7 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        return \App\Models\Products::where('product_id',$id)->first();
+        return \App\User::where('id',$id)->first();
     }
 
     /**
@@ -129,15 +125,17 @@ class ProductsController extends Controller
      */
     public function update(Request $request)
     {
-        $id = $request['product_id'];
-        unset($request['product_id']);
+        $id = $request['id'];
+        unset($request['id']);
         $data = $request->all();
-        $photo = $request->editphoto;
-        if(isset($photo[0])){   $data['product_image'] = $photo[0]; }
-        unset($data['editphoto']);
+        if(isset($data->password)){
+            $data['password'] = bcrypt($request->password);
+        }else{
+            unset($data['password']);
+        }
         \DB::beginTransaction();
         try {
-            if( \App\Models\Products::where("product_id",$id)->update($data) ){
+            if( \App\User::where("id",$id)->update($data) ){
                 \DB::commit();
                 $return['type'] = 'success';
                 $return['text'] = 'สำเร็จ';
@@ -164,7 +162,7 @@ class ProductsController extends Controller
         $update = ["status" => $request->status];
         \DB::beginTransaction();
         try {
-            if( \App\Models\Products::where('product_id',$request->id)->update($update) ){
+            if( \App\User::where('id',$request->id)->update($update) ){
                 \DB::commit();
                 $return['type'] = 'success';
                 $return['text'] = 'สำเร็จ';
@@ -183,7 +181,7 @@ class ProductsController extends Controller
     {
         \DB::beginTransaction();
         try {
-            if( \App\Models\Products::where('product_id',$request->id)->delete() ){
+            if( \App\User::where('id',$request->id)->delete() ){
                 \DB::commit();
                 $return['type'] = 'success';
                 $return['text'] = 'สำเร็จ';

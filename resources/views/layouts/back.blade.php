@@ -23,6 +23,9 @@
         <link href="{{ asset('global/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
         <link href="{{ asset('global/datatables.net-dt/css/jquery.dataTables.css') }}" rel="stylesheet">
 
+        <!-- font -->
+        <link href="{{ asset('font/CSChatThai/font.css') }}" rel="stylesheet">
+
         {{--  modal middle  --}}
         <style>
             .modal-dialog {
