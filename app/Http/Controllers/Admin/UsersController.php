@@ -43,7 +43,7 @@ class UsersController extends Controller
             $str .= ' <button class="btn btn-warning btn-sm edit-data" data-id="'.$rec->id.'">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข
                     </button> ';
-                    
+
             $str .= ' <button class="btn  btn-danger btn-sm delete-data" data-id="'.$rec->id.'">
                         <i class="fa fa-trash" aria-hidden="true"></i> ลบ
                     </button> ';
@@ -113,7 +113,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        
+
     }
 
     /**

@@ -312,7 +312,7 @@
             $( "#address" ).val( rec.address );
             //$( "#user_image" ).val(  );
             $("#status input[value="+rec.status+"]").prop('checked', true);
-            
+
             $( "#modalEdit" ).modal( "show" );
         });
     });
