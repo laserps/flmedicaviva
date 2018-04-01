@@ -25,7 +25,7 @@
                             </button>
                         </div>
                         <section class="example">
-                            <div class="table-flip-scroll">
+                            <div class=" table-responsive table-flip-scroll">
                                 {{--  <table class="table table-striped table-bordered table-hover flip-content">
                                     <thead class="flip-header">
                                         <tr>
@@ -37,7 +37,7 @@
                                         </tr>
                                     </thead>
                                 </table>  --}}
-                                <table class="table table-striped table-bordered table-hover flip-content table-sm" id="datatableAll">
+                                <table class="table table-striped table-hover table-sm" id="datatableAll">
                                     <thead>
                                         <tr>
                                             <th class="text-center">ลำดับ</th>
