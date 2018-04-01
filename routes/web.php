@@ -44,7 +44,8 @@ Route::group(['prefix' => 'admin'], function (){
 Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::get('/', function () {
-            return view('back.index');
+            $data['menu'] = '';
+            return view('back.index',$data);
         });
 
         //product order controller
