@@ -99,7 +99,7 @@
                             <label for="unit_id" class="col-sm-2 col-form-label">หน่วยนับ{{$title}}</label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <select class="form-control" name="unit_id" id="unit_id">
+                                    <select class="form-control" name="unit_id">
                                         <option value="">เลือกหน่วยนับ{{$title}}</option>
                                         @foreach($Units as $unit)
                                         <option value="{{ $unit->unit_id }}">{{ $unit->unit_name }}</option>
@@ -112,7 +112,7 @@
                             <label for="category_id" class="col-sm-2 col-form-label">ประเภท{{$title}}</label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <select class="form-control" name="category_id" id="category_id">
+                                    <select class="form-control" name="category_id">
                                         <option value="">เลือกประเภท{{$title}}</option>
                                         @foreach($Categories as $category)
                                         <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
@@ -377,13 +377,13 @@
             editphoto(rec.product_image);
             $( "#product_id" ).val( id );
             $( "#product_name" ).val( rec.product_name );
-            $( "#category_id" ).val( rec.category_id );
             $( "#product_price" ).val( rec.product_price );
             $( "#sell_price" ).val( rec.sell_price );
             $( "#description" ).val( rec.description );
+            $( "#category_id" ).val( rec.category_id );
+            $( "#unit_id" ).val( rec.unit_id );
             //$( "#product_image" ).val(  );
             $("#modalEdit input[value="+rec.status+"]").prop('checked', true);
-            $( "#unit_id" ).val( rec.unit_id );
             $( "#modalEdit" ).modal( "show" );
         });
     });
@@ -507,23 +507,23 @@
 <script src="{{asset('global/datatables.net/js/jquery.dataTables.js')}}"></script>
 <script>
     var dataTable = $('#datatableAll').dataTable({
-        "focusInvalid": false,
+        //"focusInvalid": false,
         "processing": true,
         "serverSide": true,
         "ajax": {
             "url": url+"/admin/products/dataTable",
-            "data": function ( d ) {
-            }
+            // "data": function ( d ) {
+            // }
         },
         "columns": [
             { "data": "DT_Row_Index" , "name": "DT_Row_Index" , "className": "text-center", "orderable": false , "searchable": false },
-            { "data": "category_id" , "name":"category_id" , "className": "text-center",},
+            { "data": "category_name" , "name":"category.category_name" , "className": "text-center",},
             { "data": "product_name" , "name":"product_name" },
             { "data": "product_price" , "name":"product_price" , "className": "text-ritght"},
             { "data": "sell_price" , "name":"sell_price" , "className": "text-ritght"},
-            { "data": "unit_id" , "name":"unit_id" , "className": "text-center"},
+            { "data": "unit_name" , "name":"unit.unit_name" , "className": "text-center"},
             { "data": "created_at" , "name":"created_at"},
-            { "data": "status" , "name":"status" , "className": "text-center"},
+            { "data": "status" , "name":"status" , "className": "text-center", "searchable": false},
             { "data": "action" , "name":"action" , "className": "text-center" ,"orderable": false, "searchable": false },
         ],
         "language": {

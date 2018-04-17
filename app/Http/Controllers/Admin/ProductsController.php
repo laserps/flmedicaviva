@@ -20,15 +20,25 @@ class ProductsController extends Controller
         $data['Units'] = \App\Models\Units::get();
         $data['Categories'] = \App\Models\Categories::get();
         $data['menu'] = 'products';
-
         return view('back.products',$data);
     }
 
     public function dataTable(){//Datatable
-        $result = \App\Models\Products::select();
+        $result = \DB::table('products')
+        ->leftjoin('category', 'category.category_id', '=', 'products.category_id')
+        ->leftjoin('unit', 'unit.unit_id', '=', 'products.unit_id')
+        ->select([
+            'products.product_id',
+            'products.status',
+            'category.category_name',
+            'products.product_name',
+            'products.product_price',
+            'products.sell_price',
+            'products.created_at',
+            'unit.unit_name'
+        ]);
         return Datatables::of($result)
         ->editColumn('status',function($rec){
-
             $str ='<select name="status" onchange="changeStatus('.$rec->product_id.',this.value);">';
             if($rec->status=="T"){
                 $str .='<option value="T" selected>ทำงาน</option>';
@@ -39,7 +49,6 @@ class ProductsController extends Controller
             }
             $str .='</select>';
             return $str;
-
         })
         ->addColumn('action',function($rec){
             $str = "";

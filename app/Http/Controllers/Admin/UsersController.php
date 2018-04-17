@@ -38,6 +38,14 @@ class UsersController extends Controller
             return $str;
 
         })
+        ->editColumn('sex',function($rec){
+            if($rec->sex=="M"){
+                $str ='ชาย';
+            }else{
+                $str ='หญิง';
+            }
+            return $str;
+        })
         ->addColumn('action',function($rec){
             $str = "";
             $str .= ' <button class="btn btn-warning btn-sm edit-data" data-id="'.$rec->id.'">
