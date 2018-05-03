@@ -121,3 +121,25 @@ Route::post('/admin/upload' , 'UploadController@upload');
 
 //OrakUploader
 Route::any('/upload_file', 'OrakController@upload_file');
+
+Route::get('/agent',function(){
+    return View::make('front.authorized');
+});
+Route::get('/product',function(){
+    return \View::make('front.product');
+});
+Route::get('/payment',function(){
+    return \View::make('front.payment');
+});
+Route::get('/aboutus',function(){
+    return \View::make('front.aboutus');
+});
+Route::get('/contactus',function(){
+    return \View::make('front.contactus');
+});
+Route::get('/howtobuy',function(){
+    return \View::make('front.howtobuy');
+});
+Route::get('/member',function(){
+    return \View::make('front.register');
+});
