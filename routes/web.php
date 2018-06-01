@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('front.home');
-});
+
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
@@ -121,6 +119,15 @@ Route::post('/admin/upload' , 'UploadController@upload');
 
 //OrakUploader
 Route::any('/upload_file', 'OrakController@upload_file');
+
+Route::get('/','StaticPageController@index');
+Route::get('/agent','StaticPageController@agent');
+Route::get('/product','StaticPageController@product');
+Route::get('/payment','StaticPageController@payment');
+Route::get('/aboutus','StaticPageController@aboutus');
+Route::get('/contactus','StaticPageController@contactus');
+Route::get('/howtobuy','StaticPageController@howtobuy');
+Route::get('/member','StaticPageController@member');
 
 Route::get('/agent',function(){
     return View::make('front.authorized');
