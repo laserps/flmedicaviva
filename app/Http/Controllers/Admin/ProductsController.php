@@ -142,7 +142,8 @@ class ProductsController extends Controller
         unset($request['product_id']);
         $data = $request->all();
         $photo = $request->editphoto;
-        if(isset($photo[0])){   $data['product_image'] = $photo[0]; }
+        // return $photo;
+        if(isset($photo)){   $data['product_image'] = $photo[0]; }else{ $data['product_image'] = NULL; }
         unset($data['editphoto']);
         \DB::beginTransaction();
         try {

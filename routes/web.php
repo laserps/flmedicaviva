@@ -128,25 +128,3 @@ Route::get('/aboutus','StaticPageController@aboutus');
 Route::get('/contactus','StaticPageController@contactus');
 Route::get('/howtobuy','StaticPageController@howtobuy');
 Route::get('/member','StaticPageController@member');
-
-Route::get('/agent',function(){
-    return View::make('front.authorized');
-});
-Route::get('/product',function(){
-    return \View::make('front.product');
-});
-Route::get('/payment',function(){
-    return \View::make('front.payment');
-});
-Route::get('/aboutus',function(){
-    return \View::make('front.aboutus');
-});
-Route::get('/contactus',function(){
-    return \View::make('front.contactus');
-});
-Route::get('/howtobuy',function(){
-    return \View::make('front.howtobuy');
-});
-Route::get('/member',function(){
-    return \View::make('front.register');
-});

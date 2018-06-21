@@ -90,6 +90,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="agent_line_id" class="col-sm-2 col-form-label">ไอดีไลน์{{$title}}</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="agent_line_id" placeholder="ไอดีไลน์{{$title}}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="google_latitute_longtitute" class="col-sm-2 col-form-label">Google Map{{$title}}</label>
                             <div class="col-sm-10">
                             <input type="text" class="form-control" name="google_latitute_longtitute" placeholder="Google Map {{$title}}">
@@ -141,6 +147,12 @@
                             <label for="agent_lastname" class="col-sm-2 col-form-label">นามสกุล{{$title}}</label>
                             <div class="col-sm-10">
                             <input type="text" class="form-control" name="agent_lastname" id="agent_lastname" placeholder="ชื่อ{{$title}}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="agent_line_id" class="col-sm-2 col-form-label">ไอดีไลน์{{$title}}</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control" name="agent_line_id" id="agent_line_id" placeholder="ชื่อ{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -256,6 +268,7 @@
             $( "#agent_lastname" ).val( rec.agent_lastname );
             $( "#address" ).val( rec.address );
             $( "#google_latitute_longtitute" ).val( rec.google_latitute_longtitute );
+            $( "#agent_line_id" ).val( rec.agent_line_id );
             //$( "#agent_image" ).val(  );
             $("#modalEdit input[value="+rec.status+"]").prop('checked', true);
             $( "#unit_id" ).val( rec.unit_id );

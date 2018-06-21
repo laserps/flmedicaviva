@@ -374,6 +374,7 @@
             url : url+"/admin/products/"+id,
             dataType : 'json'
         }).done(function(rec){
+            // console.log(rec.product_image);
             editphoto(rec.product_image);
             $( "#product_id" ).val( id );
             $( "#product_name" ).val( rec.product_name );
@@ -545,7 +546,8 @@
 </script>
 <script src="{{asset('global/orakuploader/jquery-ui.min.js')}}"></script>
 <script src="{{asset('global/orakuploader/orakuploader.js')}}"></script>
-<script>
+<script src="{{asset('global/orakuploader/adminusage.js')}}"></script>
+{{-- <script>
     $('#photo').orakuploader({
         orakuploader_path         : url+'/',
         orakuploader_ckeditor         : true,
@@ -574,7 +576,7 @@
                 orakuploader_thumbnail_path : 'uploads/temp/',
                 orakuploader_thumbnail_real_path : asset+'uploads/temp/',
                 orakuploader_loader_image       : asset+'images/loader.gif',
-                orakuploader_no_image       : asset+'images/no-image.jpg',
+                orakuploader_no_image       : asset+'images/noimage.jpg',
                 orakuploader_add_label       : 'เลือกรูปภาพ',
                 orakuploader_use_rotation: true,
                 orakuploader_hide_on_exceed : true, 
@@ -599,5 +601,5 @@
             });
         }
     }
-</script>
+</script> --}}
 @endsection
