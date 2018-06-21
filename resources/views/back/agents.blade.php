@@ -5,6 +5,8 @@
 @endsection
 
 @section('csstop')
+    {{-- <link href="{{asset('global/dropzone/dropzone.css')}}" rel="stylesheet"> --}}
+    <link rel="stylesheet" href="{{asset('global/orakuploader/orakuploader.css')}}">
 @endsection
 
 @section('content')
@@ -430,4 +432,8 @@
         }
     });
 </script>
+<script src="{{asset('global/orakuploader/jquery-ui.min.js')}}"></script>
+<script src="{{asset('global/orakuploader/orakuploader.js')}}"></script>
+<script src="{{asset('global/orakuploader/adminusage.js')}}"></script>
+{{-- <script src="{{asset('global/dropzone/dropzone.js')}}"></script> --}}
 @endsection
