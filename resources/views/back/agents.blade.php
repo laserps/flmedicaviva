@@ -1,15 +1,5 @@
-<!-- Stored in resources/views/child.blade.php -->
-@extends('layouts.back')
-
-@section('seo')
-@endsection
-
-@section('csstop')
-    {{-- <link href="{{asset('global/dropzone/dropzone.css')}}" rel="stylesheet"> --}}
-    <link rel="stylesheet" href="{{asset('global/orakuploader/orakuploader.css')}}">
-@endsection
-
-@section('content')
+@extends('layouts.back') @section('seo') @endsection @section('csstop')
+<link rel="stylesheet" href="{{asset('global/orakuploader/orakuploader.css')}}"> @endsection @section('content')
 <article class="content responsive-tables-page">
     <div class="title-block">
         <h1 class="title"> {{$title}} </h1>
@@ -28,17 +18,6 @@
                         </div>
                         <section class="example">
                             <div class="table-flip-scroll">
-                                {{--  <table class="table table-striped table-bordered table-hover flip-content">
-                                    <thead class="flip-header">
-                                        <tr>
-                                            <th>Rendering engine</th>
-                                            <th>Browser</th>
-                                            <th>Platform(s)</th>
-                                            <th>Engine version</th>
-                                            <th>CSS grade</th>
-                                        </tr>
-                                    </thead>
-                                </table>  --}}
                                 <table class="table table-striped table-bordered table-hover flip-content table-sm" id="datatableAll">
                                     <thead>
                                         <tr>
@@ -76,13 +55,13 @@
                         <div class="form-group row">
                             <label for="agent_firstname" class="col-sm-2 col-form-label">ชื่อ{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="text" class="form-control" name="agent_firstname" placeholder="ชื่อ{{$title}}">
+                                <input type="text" class="form-control" name="agent_firstname" placeholder="ชื่อ{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="agent_lastname" class="col-sm-2 col-form-label">นามสกุล{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="text" class="form-control" name="agent_lastname" placeholder="ชื่อ{{$title}}">
+                                <input type="text" class="form-control" name="agent_lastname" placeholder="ชื่อ{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -100,7 +79,7 @@
                         <div class="form-group row">
                             <label for="google_latitute_longtitute" class="col-sm-2 col-form-label">Google Map{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="text" class="form-control" name="google_latitute_longtitute" placeholder="Google Map {{$title}}">
+                                <input type="text" class="form-control" name="google_latitute_longtitute" placeholder="Google Map {{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -142,19 +121,19 @@
                         <div class="form-group row">
                             <label for="agent_firstname" class="col-sm-2 col-form-label">ชื่อ{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="text" class="form-control" name="agent_firstname" id="agent_firstname" placeholder="ชื่อ{{$title}}">
+                                <input type="text" class="form-control" name="agent_firstname" id="agent_firstname" placeholder="ชื่อ{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="agent_lastname" class="col-sm-2 col-form-label">นามสกุล{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="text" class="form-control" name="agent_lastname" id="agent_lastname" placeholder="ชื่อ{{$title}}">
+                                <input type="text" class="form-control" name="agent_lastname" id="agent_lastname" placeholder="ชื่อ{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="agent_line_id" class="col-sm-2 col-form-label">ไอดีไลน์{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="text" class="form-control" name="agent_line_id" id="agent_line_id" placeholder="ชื่อ{{$title}}">
+                                <input type="text" class="form-control" name="agent_line_id" id="agent_line_id" placeholder="ชื่อ{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -166,7 +145,7 @@
                         <div class="form-group row">
                             <label for="google_latitute_longtitute" class="col-sm-2 col-form-label">Google Map{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="text" class="form-control" name="google_latitute_longtitute" id="google_latitute_longtitute" placeholder="Google Map {{$title}}">
+                                <input type="text" class="form-control" name="google_latitute_longtitute" id="google_latitute_longtitute" placeholder="Google Map {{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -194,16 +173,18 @@
 
 </article>
 
-@endsection
-
-@section('jsbottom')
+@endsection @section('jsbottom')
 <script type="text/javascript">
-    {{-- Start  Add  --}}
-    $( ".add-data" ).click(function() {
+    {
+        {
+            --Start Add--
+        }
+    }
+    $(".add-data").click(function () {
         document.getElementById('formAdd').reset();
-        $( "#modalAdd" ).modal( "show" );
+        $("#modalAdd").modal("show");
     });
-    $( "#formAdd" ).validate({
+    $("#formAdd").validate({
         rules: {
             agent_name: "required",
             agent_price: "required",
@@ -213,71 +194,84 @@
             agent_price: "กรุณาระบุ",
         },
         errorElement: "span",
-        errorPlacement: function ( error, element ) {
+        errorPlacement: function (error, element) {
             // Add the `help-block` class to the error element
-            error.addClass( "help-block" );
-            if ( element.prop( "type" ) === "checkbox" ) {
-                error.insertAfter( element.parent( "label" ) );
+            error.addClass("help-block");
+            if (element.prop("type") === "checkbox") {
+                error.insertAfter(element.parent("label"));
             } else {
-                error.insertAfter( element );
+                error.insertAfter(element);
             }
         },
-        highlight: function ( element, errorClass, validClass ) {
-            $( element ).parents('.form-group').addClass( "has-error" ).removeClass( "has-success" );
+        highlight: function (element, errorClass, validClass) {
+            $(element).parents('.form-group').addClass("has-error").removeClass("has-success");
         },
         unhighlight: function (element, errorClass, validClass) {
-            $( element ).parents('.form-group').addClass( "has-success" ).removeClass( "has-error" );
+            $(element).parents('.form-group').addClass("has-success").removeClass("has-error");
         },
-        submitHandler: function(form){
+        submitHandler: function (form) {
             var btn = $(form).find('[type="submit"]');
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                method : "POST",
-                url : url+"/admin/agents",
-                dataType : 'json',
-                data : $(form).serialize()
-            }).done(function(rec){
-                if(rec.type == 'success'){
+                method: "POST",
+                url: url + "/admin/agents",
+                dataType: 'json',
+                data: $(form).serialize()
+            }).done(function (rec) {
+                if (rec.type == 'success') {
                     swal({
-                        confirmButtonText:'ตกลง',title: rec.title,text: rec.text,type: rec.type
+                        confirmButtonText: 'ตกลง',
+                        title: rec.title,
+                        text: rec.text,
+                        type: rec.type
                     });
                     $('#modalAdd').modal('hide');
                     dataTable.api().ajax.reload();
                     form.reset();
-                }else{
+                } else {
                     swal({
-                        confirmButtonText:'ตกลง',title: rec.title,text: rec.text,type: rec.type
+                        confirmButtonText: 'ตกลง',
+                        title: rec.title,
+                        text: rec.text,
+                        type: rec.type
                     });
                 }
             });
         }
-    });
-    {{--  End Add  --}}
+    }); {
+        {
+            --End Add--
+        }
+    }
 
-    {{--  Start Edit  --}}
-    $('body').on('click', '.edit-data', function(){
+    {
+        {
+            --Start Edit--
+        }
+    }
+    $('body').on('click', '.edit-data', function () {
         var id = $(this).data('id');
         document.getElementById('formEdit').reset();
         $.ajax({
-            method : "GET",
-            url : url+"/admin/agents/"+id,
-            dataType : 'json'
-        }).done(function(rec){
-            $( "#agent_id" ).val( id );
-            $( "#agent_firstname" ).val( rec.agent_firstname );
-            $( "#agent_lastname" ).val( rec.agent_lastname );
-            $( "#address" ).val( rec.address );
-            $( "#google_latitute_longtitute" ).val( rec.google_latitute_longtitute );
-            $( "#agent_line_id" ).val( rec.agent_line_id );
+            method: "GET",
+            url: url + "/admin/agents/" + id,
+            dataType: 'json'
+        }).done(function (rec) {
+            $("#agent_id").val(id);
+            $("#agent_firstname").val(rec.agent_firstname);
+            $("#agent_lastname").val(rec.agent_lastname);
+            $("#address").val(rec.address);
+            $("#google_latitute_longtitute").val(rec.google_latitute_longtitute);
+            $("#agent_line_id").val(rec.agent_line_id);
             //$( "#agent_image" ).val(  );
-            $("#modalEdit input[value="+rec.status+"]").prop('checked', true);
-            $( "#unit_id" ).val( rec.unit_id );
-            $( "#modalEdit" ).modal( "show" );
+            $("#modalEdit input[value=" + rec.status + "]").prop('checked', true);
+            $("#unit_id").val(rec.unit_id);
+            $("#modalEdit").modal("show");
         });
     });
-    $( "#formEdit" ).validate({
+    $("#formEdit").validate({
         rules: {
             agent_name: "required",
             agent_price: "required",
@@ -287,50 +281,63 @@
             agent_price: "กรุณาระบุ",
         },
         errorElement: "span",
-        errorPlacement: function ( error, element ) {
+        errorPlacement: function (error, element) {
             // Add the `help-block` class to the error element
-            error.addClass( "help-block" );
-            if ( element.prop( "type" ) === "checkbox" ) {
-                error.insertAfter( element.parent( "label" ) );
+            error.addClass("help-block");
+            if (element.prop("type") === "checkbox") {
+                error.insertAfter(element.parent("label"));
             } else {
-                error.insertAfter( element );
+                error.insertAfter(element);
             }
         },
-        highlight: function ( element, errorClass, validClass ) {
-            $( element ).parents('.form-group').addClass( "has-error" ).removeClass( "has-success" );
+        highlight: function (element, errorClass, validClass) {
+            $(element).parents('.form-group').addClass("has-error").removeClass("has-success");
         },
         unhighlight: function (element, errorClass, validClass) {
-            $( element ).parents('.form-group').addClass( "has-success" ).removeClass( "has-error" );
+            $(element).parents('.form-group').addClass("has-success").removeClass("has-error");
         },
-        submitHandler: function(form){
+        submitHandler: function (form) {
             var btn = $(form).find('[type="submit"]');
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                method : "POST",
-                url : url+"/admin/agents/update",
-                dataType : 'json',
-                data : $(form).serialize()
-            }).done(function(rec){
-                if(rec.type == 'success'){
+                method: "POST",
+                url: url + "/admin/agents/update",
+                dataType: 'json',
+                data: $(form).serialize()
+            }).done(function (rec) {
+                if (rec.type == 'success') {
                     swal({
-                        confirmButtonText:'ตกลง',title: rec.title,text: rec.text,type: rec.type
+                        confirmButtonText: 'ตกลง',
+                        title: rec.title,
+                        text: rec.text,
+                        type: rec.type
                     });
                     $('#modalEdit').modal('hide');
                     dataTable.api().ajax.reload();
-                }else{
+                } else {
                     swal({
-                        confirmButtonText:'ตกลง',title: rec.title,text: rec.text,type: rec.type
+                        confirmButtonText: 'ตกลง',
+                        title: rec.title,
+                        text: rec.text,
+                        type: rec.type
                     });
                 }
             });
         }
-    });
-    {{--  End Edit  --}}
+    }); {
+        {
+            --End Edit--
+        }
+    }
 
-    {{--  Start Delete  --}}
-    $('body').on('click', '.delete-data',function(){
+    {
+        {
+            --Start Delete--
+        }
+    }
+    $('body').on('click', '.delete-data', function () {
         var id = $(this).data('id');
         swal({
             title: 'คุณต้องการลบข้อมูลหรือไม่ ?',
@@ -342,55 +349,74 @@
             confirmButtonText: 'ยืนยัน',
             cancelButtonText: 'ยกเลิก'
         }).then((result) => {
-            if (result.value==true) {
+            if (result.value == true) {
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    method : "post",
-                    url : url+"/admin/agents/delete",
-                    dataType : 'json',
-                    data : {'id':id}
-                }).done(function(rec){
-                    if(rec.type=='success'){
+                    method: "post",
+                    url: url + "/admin/agents/delete",
+                    dataType: 'json',
+                    data: {
+                        'id': id
+                    }
+                }).done(function (rec) {
+                    if (rec.type == 'success') {
                         swal({
-                            confirmButtonText:'ตกลง',title: rec.title,text: rec.text,type: rec.type
+                            confirmButtonText: 'ตกลง',
+                            title: rec.title,
+                            text: rec.text,
+                            type: rec.type
                         });
                         dataTable.api().ajax.reload();
-                    }else{
-                        swal(rec.title,rec.text,rec.type);
+                    } else {
+                        swal(rec.title, rec.text, rec.type);
                     }
                 });
             }
         });
-    });
-    {{--  End Delete  --}}
+    }); {
+        {
+            --End Delete--
+        }
+    }
 
-    {{--  Start Status  --}}
-    function changeStatus(id,value){
+    {
+        {
+            --Start Status--
+        }
+    }
+
+    function changeStatus(id, value) {
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            method : "post",
-            url : url+"/admin/agents/changeStatus",
-            dataType : 'json',
-            data : {
-                'id':id,
-                'status':value
+            method: "post",
+            url: url + "/admin/agents/changeStatus",
+            dataType: 'json',
+            data: {
+                'id': id,
+                'status': value
             }
-        }).done(function(rec){
-            if(rec.type=='success'){
+        }).done(function (rec) {
+            if (rec.type == 'success') {
                 swal({
-                    confirmButtonText:'ตกลง',title: rec.title,text: rec.text,type: rec.type
+                    confirmButtonText: 'ตกลง',
+                    title: rec.title,
+                    text: rec.text,
+                    type: rec.type
                 });
                 dataTable.api().ajax.reload();
-            }else{
-                swal(rec.title,rec.text,rec.type);
+            } else {
+                swal(rec.title, rec.text, rec.type);
             }
         });
+    } {
+        {
+            --End Status--
+        }
     }
-    {{--  End Status  --}}
 </script>
 
 <!-- datatables -->
@@ -401,19 +427,51 @@
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": url+"/admin/agents/dataTable",
-            "data": function ( d ) {
-            }
+            "url": url + "/admin/agents/dataTable",
+            "data": function (d) {}
         },
-        "columns": [
-            { "data": "DT_Row_Index" , "name": "DT_Row_Index" , "className": "text-center", "orderable": false , "searchable": false },
-            { "data": "agent_firstname" , "name":"agent_firstname" },
-            { "data": "agent_lastname" , "name":"agent_lastname" },
-            { "data": "address" , "name":"address" , "className": "text-ritght"},
-            { "data": "google_latitute_longtitute" , "name":"google_latitute_longtitute" , "className": "text-center"},
-            { "data": "created_at" , "name":"created_at" , "className": "text-center"},
-            { "data": "status" , "name":"status" , "className": "text-center"},
-            { "data": "action" , "name":"action" , "className": "text-center" ,"orderable": false, "searchable": false },
+        "columns": [{
+                "data": "DT_Row_Index",
+                "name": "DT_Row_Index",
+                "className": "text-center",
+                "orderable": false,
+                "searchable": false
+            },
+            {
+                "data": "agent_firstname",
+                "name": "agent_firstname"
+            },
+            {
+                "data": "agent_lastname",
+                "name": "agent_lastname"
+            },
+            {
+                "data": "address",
+                "name": "address",
+                "className": "text-ritght"
+            },
+            {
+                "data": "google_latitute_longtitute",
+                "name": "google_latitute_longtitute",
+                "className": "text-center"
+            },
+            {
+                "data": "created_at",
+                "name": "created_at",
+                "className": "text-center"
+            },
+            {
+                "data": "status",
+                "name": "status",
+                "className": "text-center"
+            },
+            {
+                "data": "action",
+                "name": "action",
+                "className": "text-center",
+                "orderable": false,
+                "searchable": false
+            },
         ],
         "language": {
             "paginate": {
@@ -428,12 +486,10 @@
             "infoFiltered": "(ค้นหา จากทั้งหมด _MAX_ รายการ)",
         },
         responsive: true,
-        "drawCallback": function( settings ) {
-        }
+        "drawCallback": function (settings) {}
     });
 </script>
 <script src="{{asset('global/orakuploader/jquery-ui.min.js')}}"></script>
 <script src="{{asset('global/orakuploader/orakuploader.js')}}"></script>
 <script src="{{asset('global/orakuploader/adminusage.js')}}"></script>
-{{-- <script src="{{asset('global/dropzone/dropzone.js')}}"></script> --}}
 @endsection

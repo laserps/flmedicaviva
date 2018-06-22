@@ -1,13 +1,5 @@
 <!-- Stored in resources/views/child.blade.php -->
-@extends('layouts.back')
-
-@section('seo')
-@endsection
-
-@section('csstop')
-@endsection
-
-@section('content')
+@extends('layouts.back') @section('seo') @endsection @section('csstop') @endsection @section('content')
 <article class="content responsive-tables-page">
     <div class="title-block">
         <h1 class="title"> Responsive Tables </h1>
@@ -128,8 +120,4 @@
         </div>
     </section>
 </article>
-@endsection
-
-@section('jsbottom')
-@endsection
-
+@endsection @section('jsbottom') @endsection
