@@ -175,11 +175,9 @@
 
 @endsection @section('jsbottom')
 <script type="text/javascript">
-    {
-        {
-            --Start Add--
-        }
-    }
+
+    {{-- --Start Add-- --}}
+
     $(".add-data").click(function () {
         document.getElementById('formAdd').reset();
         $("#modalAdd").modal("show");
@@ -240,17 +238,10 @@
                 }
             });
         }
-    }); {
-        {
-            --End Add--
-        }
-    }
+    }); 
+            {{-- --End Add-- --}}
+            {{-- --Start Edit-- --}}
 
-    {
-        {
-            --Start Edit--
-        }
-    }
     $('body').on('click', '.edit-data', function () {
         var id = $(this).data('id');
         document.getElementById('formEdit').reset();
@@ -326,17 +317,11 @@
                 }
             });
         }
-    }); {
-        {
-            --End Edit--
-        }
-    }
+    }); 
+            {{-- --End Edit-- --}}
 
-    {
-        {
-            --Start Delete--
-        }
-    }
+            {{-- --Start Delete-- --}}
+
     $('body').on('click', '.delete-data', function () {
         var id = $(this).data('id');
         swal({
@@ -375,17 +360,12 @@
                 });
             }
         });
-    }); {
-        {
-            --End Delete--
-        }
-    }
+    }); 
+    
+            {{-- --End Delete-- --}}
 
-    {
-        {
-            --Start Status--
-        }
-    }
+            {{-- --Start Status-- --}}
+
 
     function changeStatus(id, value) {
         $.ajax({
@@ -412,11 +392,8 @@
                 swal(rec.title, rec.text, rec.type);
             }
         });
-    } {
-        {
-            --End Status--
-        }
     }
+            {{-- --End Status-- --}}
 </script>
 
 <!-- datatables -->
