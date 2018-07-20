@@ -20,16 +20,129 @@
             <li><a href="contact.php">ติดต่อเรา</a></li>
             <li><a href="howtobuy.php">วิธีการซื้อสินค้า</a></li>
             <li><a href="register.php">สมาชิก</a></li> --}}
-            <li class="add-cart">
-              <a href="#">
+            <li class="add-cart dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
               </a>
               <span>2</span>
+<!--               <ul class="dropdown-menu dropdown-cart" aria-labelledby="dropdownMenu1">
+                <li class="cart-header">
+                  <div class="shopping-cart-header">
+                    <div>
+                    <i class="fa fa-shopping-cart cart-icon"></i><span class="drop-cart">3</span>
+                    </div>
+                    <div class="shopping-cart-total">
+                      <label class="lighter-text">Total: $2,229.97</label>
+                    </div>
+                  </div> 
+                </li>
+              </ul> -->
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+
+                  <div class="dropdown-item">
+                    <div class="shopping-cart-header">
+                      <div style="position:relative; margin-left: 15px;">
+                      <i class="fa fa-shopping-cart cart-icon"></i><span class="drop-cart">2</span>
+                      </div>
+                      <div class="shopping-cart-total">
+                        <label class="lighter-text">Total: ฿2,229.97</label>
+                      </div>
+                    </div> 
+                  </div>
+
+                  <div class="dropdown-item">
+                    <div class="shopping-cart-header">
+                      <div class="row row-drop-cart">
+                        <div class="shopping-cart-img">
+                          <div class="cart-img-frame">
+                          <img src="http://localhost:8012/flmedicaviva/public/front/viva/images/pd3.jpg" alt="...">
+                          </div>
+                        </div>
+                        <div class="shopping-cart-info">
+                          <div class="shopping-cart-title">
+                            <label>สินค้า 3</label>
+                          </div>
+                           <div class="shopping-cart-detail">
+                              <label>฿299</label>
+                              <label class="pull-right"> 1 ชิ้น</label>
+                           </div>
+                        </div>
+                      </div> 
+                    </div>
+                  </div>
+
+                  <div class="dropdown-item">
+                    <div class="shopping-cart-header">
+                      <div class="row row-drop-cart">
+                        <div class="shopping-cart-img">
+                          <div class="cart-img-frame">
+                          <img src="http://localhost:8012/flmedicaviva/public/front/viva/images/pd3.jpg" alt="...">
+                          </div>
+                        </div>
+                        <div class="shopping-cart-info">
+                          <div class="shopping-cart-title">
+                            <label>สินค้า 3</label>
+                          </div>
+                           <div class="shopping-cart-detail">
+                              <label>฿299</label>
+                              <label class="pull-right"> 1 ชิ้น</label>
+                           </div>
+                        </div>
+                      </div> 
+                    </div>
+                  </div>
+
+                <div class="dropdown-item">
+                    <div class="shopping-cart-header">
+                      <div class="row row-drop-cart text-center">
+                        <button class="btn-ghost btn-green"> Checkout </button>
+                      </div> 
+                  </div>
+                </div>
             </li>
           </ul>
         </nav>
+
         <a href="#" class="nav-toggle">Menu<span></span></a>
       </div>
     </header>
+
+<!--         <div class="shopping-cart-container">
+          <div class="shopping-cart">
+            <div class="shopping-cart-header">
+              <i class="fa fa-shopping-cart cart-icon"></i><span class="badge">3</span>
+              <div class="shopping-cart-total">
+                <span class="lighter-text">Total:</span>
+                <span class="main-color-text">$2,229.97</span>
+              </div>
+            </div> 
+
+            <ul class="shopping-cart-items">
+              <li class="clearfix">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item1.jpg" alt="item1" />
+                <span class="item-name">Sony DSC-RX100M III</span>
+                <span class="item-price">$849.99</span>
+                <span class="item-quantity">Quantity: 01</span>
+              </li>
+
+              <li class="clearfix">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item2.jpg" alt="item1" />
+                <span class="item-name">KS Automatic Mechanic...</span>
+                <span class="item-price">$1,249.99</span>
+                <span class="item-quantity">Quantity: 01</span>
+              </li>
+
+              <li class="clearfix">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/cart-item3.jpg" alt="item1" />
+                <span class="item-name">Kindle, 6" Glare-Free To...</span>
+                <span class="item-price">$129.99</span>
+                <span class="item-quantity">Quantity: 01</span>
+              </li>
+            </ul>
+
+            <a href="#" class="button">Checkout</a>
+          </div>
+        </div> -->
     <!-- Navigation Section -->
   </section>
