@@ -36,7 +36,7 @@ Route::group(['prefix' => 'admin'], function (){
     });
     Route::post('login', 'Admin\LoginController@login');
     Route::get('logout', 'Admin\LoginController@logout');
-});  
+});
 
 //Ecommerce Admin
 Route::group(['middleware' => 'admin'], function () {
@@ -115,7 +115,12 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/stp/howbuy','Admin\StaticpageController@howbuy');
         Route::get('/stp/payment','Admin\StaticpageController@payment');
         Route::post('/stp/update','Admin\StaticpageController@update');
-        
+
+        //contacts controller
+        Route::get('/contacts/dataTable','Admin\ContactsController@dataTable');
+        Route::post('/contacts/update','Admin\ContactsController@update');
+        Route::post('/contacts/delete','Admin\ContactsController@destroy');
+        Route::resource('/contacts','Admin\ContactsController');
 
         Route::get('/laravel-filemanager', '\Unisharp\Laravelfilemanager\controllers\LfmController@show');
         Route::post('/laravel-filemanager/upload', '\Unisharp\Laravelfilemanager\controllers\UploadController@upload');
@@ -135,3 +140,5 @@ Route::get('/aboutus','StaticPageController@aboutus');
 Route::get('/contactus','StaticPageController@contactus');
 Route::get('/howtobuy','StaticPageController@howtobuy');
 Route::get('/member','StaticPageController@member');
+Route::post('/contactus','StaticPageController@contactUsStore');
+Route::post('/member','StaticPageController@memberStore');

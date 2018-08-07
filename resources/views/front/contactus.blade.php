@@ -40,7 +40,8 @@
                         <div class="page-header">
                             <h3>ติดต่อเรา</h3>
                         </div>
-                        <form action="#" id="formid">
+                        <form id="formid">
+                            {{ csrf_field() }}
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <input type="text" class="form-control" name="name" placeholder="ชื่อ-นามสกุล" required="">
@@ -61,15 +62,15 @@
 
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="หัวเรื่อง" required="">
+                                    <input type="text" class="form-control" name="title" placeholder="หัวเรื่อง" required="">
                                 </div> <!-- end of form-group -->
 
                                 <div class="form-group">
-                                    <textarea class="form-control" name="message" rows="4" placeholder="ข้อความ" required=""></textarea>
+                                    <textarea class="form-control" name="detail" rows="4" placeholder="ข้อความ" required=""></textarea>
                                 </div>
 
                                 <div class="center-content">
-                                    <input type="submit" value="Submit" class="btn-ghost btn-green">
+                                    <button type="submit" class="btn-ghost btn-green">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -77,9 +78,30 @@
                 </div>
             </div>
         </div>
-    </section>   
+    </section>
 {{-- end content --}}
 @endsection
-
 @section('js')
+<script src="{{asset('global/jquery/dist/jquery.min.js')}}"></script>
+<script>
+$('#formid').submit(function (e) {
+    e.preventDefault();
+    var form = $(this);
+    $.ajax({
+        method: "POST",
+        url: url_gb + "/contactus",
+        dataType: 'json',
+        data: $(this).serialize()
+    }).done(function (rec) {
+        if (rec.status == 0) {
+            alert('Successfully');
+            $('#formid').find('input, textarea').val('');
+        } else {
+            alert('Unsuccessfully request');
+        }
+    }).fail(function () {
+        alert('Unsuccessfully request');
+    });
+});
+</script>
 @endsection
