@@ -6,7 +6,6 @@
 
 @section('csstop')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    {{--  <link rel="stylesheet" href="{{asset('global/bootstrap/dist/css/bootstrap.css')}}">  --}}
     <script src="{{asset('global/dropzone/dropzone.js')}}"></script>
     <link href="{{asset('global/dropzone/dropzone.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('global/orakuploader/orakuploader.css')}}">
@@ -32,7 +31,7 @@
                         </div>
                         <section class="example">
                             <div class="table-flip-scroll">
-                                <table class="table table-striped table-bordered table-hover flip-content table-sm table-responsive" id="datatableAll">
+                                <table class="table table-striped table-bordered table-hover flip-content table-sm" style="width:100%;" id="datatableAll">
                                     <thead>
                                         <tr>
                                             <th class="text-center">ลำดับ</th>
@@ -66,6 +65,30 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+
+                    {{--  start clone  --}}
+                    <div class="form-group row hidden" id="forclone" aria-hidden="true">
+                        <label for="description" class="col-sm-2 col-form-label">สินค้าที่{{$title}}</label>
+                        <div class="col-sm-6">
+                            {{--  <input type="text" class="form-control" name="promotion_item[]" placeholder="สินค้า">  --}}
+                            <select name="promotion_item[]" class="form-control">
+                                <option value="null">เลือกสินค้า</option>
+                                @foreach($products as $product)
+                                <option value="{{$product->product_id}}">{{$product->product_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control qty" name="qty[]" placeholder="จำนวน">
+                        </div>
+                        <div class="col-sm-1">
+                            <button type="button" class="btn btn-danger btn-sm pull-right" onclick="removeElement(this)">
+                                -
+                            </button>
+                        </div>
+                    </div>
+                    {{--  end clone  --}}
+
                     <form id="formAdd" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group row">
@@ -83,11 +106,12 @@
                             <input type="ชื่อ{{$title}}" class="form-control" name="promotion_name" placeholder="ชื่อ{{$title}}">
                             </div>
                         </div>
-                        <div class="form-group row hidden" id="forclone" aria-hidden="true">
+
+                        <div class="form-group row">
                             <label for="description" class="col-sm-2 col-form-label">สินค้าที่{{$title}}</label>
                             <div class="col-sm-6">
                                 {{--  <input type="text" class="form-control" name="promotion_item[]" placeholder="สินค้า">  --}}
-                                <select name="promotion_item[]" class="form-control products">
+                                <select name="promotion_item[]" class="form-control" id="static">
                                     <option value="null">เลือกสินค้า</option>
                                     @foreach($products as $product)
                                     <option value="{{$product->product_id}}">{{$product->product_name}}</option>
@@ -95,28 +119,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-3">
-                                <input type="จำนวน" class="form-control" name="qty[]" placeholder="จำนวน">
-                            </div>
-                            <div class="col-sm-1">
-                                <button type="button" class="btn btn-danger btn-sm pull-right" onclick="removeElement(this)">
-                                    -
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="description" class="col-sm-2 col-form-label">สินค้าที่{{$title}}</label>
-                            <div class="col-sm-6">
-                                {{--  <input type="text" class="form-control" name="promotion_item[]" placeholder="สินค้า">  --}}
-                                <select name="promotion_item[]" class="form-control products">
-                                        <option value="null">เลือกสินค้า</option>
-                                        @foreach($products as $product)
-                                        <option value="{{$product->product_id}}">{{$product->product_name}}</option>
-                                        @endforeach
-                                </select>
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="จำนวน" class="form-control" name="qty[]" placeholder="จำนวน">
+                                <input type="text" class="form-control qty" name="qty[]" placeholder="จำนวน">
                             </div>
                             <div class="col-sm-1">
                                 <button type="button" class="btn btn-primary btn-sm pull-right" id="btn-clone">
@@ -247,9 +250,6 @@
             </div>
         </div>
     </div>  --}}
-    <button id="myBtn">Try it</button>
-
-
 </article>
 
 @endsection
@@ -258,21 +258,41 @@
 {{--  select2  --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script type="text/javascript">
-
+    
     {{-- Start  Add  --}}
     $( ".add-data" ).click(function() {
         document.getElementById('formAdd').reset();
-        $('.products').select2();
+        $("#static").select2();
         $( "#modalAdd" ).modal( "show" );
     });
+
+    $( "#btn-clone" ).click(function(e) {
+        $( "#forclone" ).clone().removeClass('hidden').appendTo( "#clone" );
+        $("#clone select[name='promotion_item[]']").select2();
+        e.preventDefault();
+        $("#formAdd input[name='qty[]']").each(function() {
+            $(this).rules("add", 
+            {
+                required: true,
+                messages: {
+                    required: "กรุณาระบุ",
+                },
+            });
+        });
+
+    });
+
     $( "#formAdd" ).validate({
+
         rules: {
             promotion_name: "required",
-            promotion_price: "required",
+            sell_price: "required",
+            'qty[]': "required",
         },
         messages: {
             promotion_name: "กรุณาระบุ",
-            promotion_price: "กรุณาระบุ",
+            sell_price: "กรุณาระบุ",
+            'qty[]': "กรุณาระบุ",
         },
         errorElement: "span",
         errorPlacement: function ( error, element ) {
@@ -317,18 +337,6 @@
         }
     });
 
-    $( "#btn-clone" ).click(function() {
-        
-        $( "#forclone" ).clone().removeClass('hidden').appendTo( "#clone" );
-        {{--  $('.products').select2();  --}}
-        window.addEventListener("load", function(){
-            console.log("All resources finished loading!");
-        }, false);
-        {{--  document.getElementById('clone').addEventListener("load", function(event) {
-            console.log("All resources finished loading!");
-        });  --}}
-    });
-
     function removeElement(e){
         e.closest( ".form-group" ).remove();
     }
@@ -360,6 +368,7 @@
         });
     });
     $( "#formEdit" ).validate({
+
         rules: {
             promotion_name: "required",
             promotion_price: "required",
@@ -572,7 +581,5 @@
         }
     }
 </script> --}}
-<script>
-    $('.products').select2();
-</script>
+<script>$("#static").select2();</script>
 @endsection

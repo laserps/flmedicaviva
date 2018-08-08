@@ -314,23 +314,37 @@ $(function() {
 
 	$(".wyswyg").each(function() {
 
-		var $toolbar = $(this).find(".toolbar");
 		var $editor = $(this).find(".editor");
-
+		var $toolbar = $(this).find(".toolbar");
 
 		var editor = new Quill($editor.get(0), {
-			theme: 'snow'
+			theme: 'snow',
+			// modules: {
+			// 	toolbar: toolbarOptions
+			// }
+			modules: {
+				toolbar: $toolbar.get(0)
+			}
 		});
 
-		editor.addModule('toolbar', {
-			container: $toolbar.get(0)     // Selector for toolbar container
-		});
+		// var $toolbar = $(this).find(".toolbar");
+		// var $editor = $(this).find(".editor");
+
+
+		// var editor = new Quill($editor.get(0), {
+		// 	theme: 'snow'
+		// });
+
+		// editor.addModule('toolbar', {
+		// 	container: $toolbar.get(0)     // Selector for toolbar container
+		// });
 
 
 
 	});
-	
+
 });
+
 $(function () {
 
 	$('#sidebar-menu, #customize-menu').metisMenu({
@@ -670,16 +684,15 @@ $(function() {
                     borderWidth:0,
                     hoverable: true //IMPORTANT! this is needed for tooltip to work,
 
-                },
-                tooltip: true,
-                tooltipOpts: {
-                    content: "%s for %x was %y",
+				},
+				tooltip: {
+					show: true,
+					content: "%s for %x was %y",
                     xDateFormat: "%y-%m-%d",
-
                     onHover: function(flotItem, $tooltipEl) {
                         // console.log(flotItem, $tooltipEl);
                     }
-                }
+				}
 
             });
         }
@@ -699,6 +712,7 @@ $(function() {
     });
 
 });
+
 $(function() {
     
     if (!$('#morris-one-line-chart').length) {
@@ -1114,7 +1128,7 @@ $(function() {
 $(function(){
 
 	// set sortable options
-	$('.images-container').sortable({
+	var sortable = new Sortable($('.images-container').get(0), {
 		animation: 150,
 		handle: ".control-btn.move",
 		draggable: ".image-container",
@@ -1145,6 +1159,7 @@ $(function(){
 	})
 
 })
+
 $(function() {
 
     if (!$('#select-all-items').length) {

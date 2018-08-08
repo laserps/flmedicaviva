@@ -71,6 +71,7 @@ class PromotionController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        return $data;
         $data['created_at'] = date('Y-m-d H:i:s');
         $photo = $request->photo;
         if(isset($photo[0])){   $data['promotion_image'] = $photo[0]; }
