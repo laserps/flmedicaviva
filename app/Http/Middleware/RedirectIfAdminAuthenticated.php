@@ -19,7 +19,7 @@ class RedirectIfAdminAuthenticated
     {
         //If request comes from logged in user, he will
         //be redirect to home page.
-        if (Auth::guard()->check()) {
+        if (Auth::guard('admin')->check()) {
             return redirect('/admin');
         }
 

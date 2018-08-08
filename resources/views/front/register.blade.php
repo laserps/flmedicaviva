@@ -84,7 +84,8 @@
                     <h4 class="modal-title" id="myModalLabel">เข้าสู่ระบบ</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="login">
+                        {{ csrf_field() }}
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <input type="email" class="form-control" name="email" placeholder="Email" >
@@ -92,7 +93,7 @@
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <input type="password" class="form-control" name="name" placeholder="รหัสผ่าน" >
+                                <input type="password" class="form-control" name="password" placeholder="รหัสผ่าน" >
                             </div>
                         </div>
                         <div class="center-content">
@@ -118,12 +119,27 @@ $('#register').submit(function (e) {
         dataType: 'json',
         data: $(this).serialize()
     }).done(function (rec) {
-        if (rec.status == 0) {
-            alert('Successfully');
+        if (rec.status == 1) {
+            alert('สมัครสมาชิกสำเร็จ');
             $('#formid').find('input, textarea').val('');
+        } else if(rec.status == 2) {
+            alert('ไม่สำเร็จ '+rec.content);
         } else {
-            alert('Unsuccessfully request');
+            alert(rec.content);
         }
+    }).fail(function () {
+        alert('Unsuccessfully request');
+    });
+});
+$('#login').submit(function (e) {
+    e.preventDefault();
+    var form = $(this);
+    $.ajax({
+        method: "POST",
+        url: "{{ route('login') }}",
+        data: $(this).serialize()
+    }).done(function (rec) {
+        window.location.href = url_gb+'/';
     }).fail(function () {
         alert('Unsuccessfully request');
     });
