@@ -98,36 +98,80 @@ class StaticPageController extends Controller
                 $data_insert = $input_all;
                 \App\Models\User::insert($data_insert);
                 \DB::commit();
-                $return['status'] = 0;
-                $return['content'] = '';
+                $return['status'] = 1;
+                $return['content'] = 'สำเร็จ';
             } catch (Exception $e) {
                 \DB::rollBack();
-                $return['status'] = 1;
-                $return['content'] = ''. $e->getMessage();
+                $return['status'] = 0;
+                $return['content'] = 'ไม่สำเร็จ'. $e->getMessage();
             }
         } else {
             $failedRules = $validator->failed();
             if (isset($failedRules['email']['Required'])) {
                 $return['status'] = 2;
-                $return['content'] = '';
+                $return['content'] = 'กรุณาระบุอีเมล';
             } elseif (isset($failedRules['email']['Unique'])) {
                 $return['status'] = 2;
-                $return['content'] = '';
+                $return['content'] = 'มีผู้ใช้งานอีเมลนี้อยู่แล้ว';
             } elseif (isset($failedRules['email']['Email'])) {
                 $return['status'] = 2;
-                $return['content'] = '';
+                $return['content'] = 'รูปแบบอีเมลเท่านั้น';
             } elseif (isset($failedRules['password']['Required'])) {
                 $return['status'] = 2;
-                $return['content'] = '';
+                $return['content'] = 'กรุณาระกรอกรหัสผ่าน';
             } elseif (isset($failedRules['mobile']['Required'])) {
                 $return['status'] = 2;
-                $return['content'] = '';
+                $return['content'] = 'กรุณากรอกเบอร์โทรศัพท์';
             } elseif (isset($failedRules['name']['Required'])) {
                 $return['status'] = 2;
-                $return['content'] = '';
+                $return['content'] = 'กรุณาระบุชื่อ-นามสกุล';
             } elseif (isset($failedRules['password']['Confirmed'])) {
                 $return['status'] = 2;
-                $return['content'] = '';
+                $return['content'] = 'รหัสผ่านไม่ตรงกัน';
+            } else {
+                $return['status'] = 0;
+            }
+        }
+        $return['title'] = '';
+        return json_encode($return);
+    }
+    public function memberEdit(Request $request) {
+        if(\Auth::id()) {
+            return \View::make('front.editProfile',['data' => \Auth::user()]);
+        } else {
+            return redirect('/');
+        }
+    }
+
+    public function memberUpdate(Request $request) {
+        $input_all = $request->all();
+        unset($input_all['_token']);
+        $input_all['updated_at'] = date('Y-m-d H:i:s');
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'mobile' => 'required',
+        ]);
+        if (!$validator->fails()) {
+            \DB::beginTransaction();
+            try {
+                $data_insert = $input_all;
+                \App\Models\User::where('id',\Auth::id())->update($data_insert);
+                \DB::commit();
+                $return['status'] = 1;
+                $return['content'] = 'สำเร็จ';
+            } catch (Exception $e) {
+                \DB::rollBack();
+                $return['status'] = 0;
+                $return['content'] = 'ไม่สำเร็จ'. $e->getMessage();
+            }
+        } else {
+            $failedRules = $validator->failed();
+            if (isset($failedRules['name']['Required'])) {
+                $return['status'] = 2;
+                $return['content'] = 'กรุณาระบุชื่อ-นามสกุล';
+            } elseif (isset($failedRules['mobile']['Required'])) {
+                $return['status'] = 2;
+                $return['content'] = 'กรุณากรอกเบอร์โทรศัพท์';
             } else {
                 $return['status'] = 0;
             }

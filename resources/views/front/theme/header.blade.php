@@ -12,7 +12,55 @@
             <li><a href="{{url('/aboutus')}}">เกี่ยวกับเรา</a></li>
             <li><a href="{{url('/contactus')}}">ติดต่อเรา</a></li>
             <li><a href="{{url('/howtobuy')}}">วิธีการซื้อสินค้า</a></li>
+            @if(!\Auth::id())
             <li><a href="{{url('/member')}}">สมาชิก</a></li>
+            @else
+            <li class="add-cart dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                {{str_limit(\Auth::user()->name,6)}}
+              </a>
+<!--               <ul class="dropdown-menu dropdown-cart" aria-labelledby="dropdownMenu1">
+                <li class="cart-header">
+                  <div class="shopping-cart-header">
+                    <div>
+                    <i class="fa fa-shopping-cart cart-icon"></i><span class="drop-cart">3</span>
+                    </div>
+                    <div class="shopping-cart-total">
+                      <label class="lighter-text">Total: $2,229.97</label>
+                    </div>
+                  </div>
+                </li>
+              </ul> -->
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+
+                  <div class="dropdown-item">
+                    <div class="shopping-cart-header">
+                      <div style="position:relative; margin-left: 15px;">
+                      <div class="" style="width:100%;">
+                          <a href="{{url('/editProfile')}}" style="color:red;">123</a>
+                      </div>
+                      </div>
+                      <div class="shopping-cart-total">
+                        <label class="lighter-text"><a href="#">123</a></label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="dropdown-item">
+                    <div class="shopping-cart-header">
+                      <div style="position:relative; margin-left: 15px;">
+                      qwe
+                      </div>
+                      <div class="shopping-cart-total">
+                        <label class="lighter-text"><a href="#">123</a></label>
+                      </div>
+                    </div>
+                  </div>
+
+        </div>
+            </li>
+            @endif
             {{-- <li><a href="authorized.php">ตัวแทน</a></li>
             <li><a href="product.php">สินค้า</a></li>
             <li><a href="payment.php">จ่ายเงิน</a></li>
@@ -34,7 +82,7 @@
                     <div class="shopping-cart-total">
                       <label class="lighter-text">Total: $2,229.97</label>
                     </div>
-                  </div> 
+                  </div>
                 </li>
               </ul> -->
 
@@ -48,27 +96,6 @@
                       <div class="shopping-cart-total">
                         <label class="lighter-text">Total: ฿2,229.97</label>
                       </div>
-                    </div> 
-                  </div>
-
-                  <div class="dropdown-item">
-                    <div class="shopping-cart-header">
-                      <div class="row row-drop-cart">
-                        <div class="shopping-cart-img">
-                          <div class="cart-img-frame">
-                          <img src="http://localhost:8012/flmedicaviva/public/front/viva/images/pd3.jpg" alt="...">
-                          </div>
-                        </div>
-                        <div class="shopping-cart-info">
-                          <div class="shopping-cart-title">
-                            <label>สินค้า 3</label>
-                          </div>
-                           <div class="shopping-cart-detail">
-                              <label>฿299</label>
-                              <label class="pull-right"> 1 ชิ้น</label>
-                           </div>
-                        </div>
-                      </div> 
                     </div>
                   </div>
 
@@ -89,7 +116,28 @@
                               <label class="pull-right"> 1 ชิ้น</label>
                            </div>
                         </div>
-                      </div> 
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="dropdown-item">
+                    <div class="shopping-cart-header">
+                      <div class="row row-drop-cart">
+                        <div class="shopping-cart-img">
+                          <div class="cart-img-frame">
+                          <img src="http://localhost:8012/flmedicaviva/public/front/viva/images/pd3.jpg" alt="...">
+                          </div>
+                        </div>
+                        <div class="shopping-cart-info">
+                          <div class="shopping-cart-title">
+                            <label>สินค้า 3</label>
+                          </div>
+                           <div class="shopping-cart-detail">
+                              <label>฿299</label>
+                              <label class="pull-right"> 1 ชิ้น</label>
+                           </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -97,7 +145,7 @@
                     <div class="shopping-cart-header">
                       <div class="row row-drop-cart text-center">
                         <button class="btn-ghost btn-green"> Checkout </button>
-                      </div> 
+                      </div>
                   </div>
                 </div>
             </li>
@@ -116,7 +164,7 @@
                 <span class="lighter-text">Total:</span>
                 <span class="main-color-text">$2,229.97</span>
               </div>
-            </div> 
+            </div>
 
             <ul class="shopping-cart-items">
               <li class="clearfix">
