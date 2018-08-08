@@ -14,9 +14,7 @@
 
         <!-- Admin Style -->
         <link rel="stylesheet" href="{{asset('back/css/vendor.css')}}">
-
         <!-- Theme initialization -->
-        <link rel="stylesheet" href="{{asset('back/css/app.css')}}">
         <link rel="stylesheet" href="{{asset('back/css/app-seagreen.css')}}">
 
         <!-- Styles -->
@@ -28,8 +26,7 @@
 
         {{-- timymce --}}
         <link rel="shortcut icon" type="image/png" href="{{ asset('vendor/laravel-filemanager/img/folder.png') }}">
-        {{-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> --}}
+
         <link rel="stylesheet" href="{{ asset('vendor/laravel-filemanager/css/cropper.min.css') }}">
         <style>{!! \File::get(base_path('vendor/unisharp/laravel-filemanager/public/css/lfm.css')) !!}</style>
         {{-- Use the line below instead of the above if you need to cache the css. --}}
@@ -69,7 +66,7 @@
             var url = "{{ url('/') }}";
             var asset = "{{ asset('') }}";
         </script>
-        
+
         <!-- jquery -->
         <script src="{{asset('global/jquery/dist/jquery.min.js')}}"></script>
 
@@ -80,8 +77,8 @@
         <script src="{{asset('global/jquery-validation/dist/jquery.validate.min.js')}}"></script>
         <script src="{{asset('global/jquery-validation/dist/localization/messages_th.js')}}"></script>
 
-        <!-- datatables -->
-        {{--  <script src="{{asset('global/datatables.net/js/jquery.dataTables.js')}}"></script>  --}}
+        {{--  <!-- datatables -->
+        <script src="{{asset('global/datatables.net/js/jquery.dataTables.js')}}"></script>  --}}
 
         <!-- tinymce -->
         <script src="{{asset('global/tinymce/js/tinymce/jquery.tinymce.min.js')}}"></script>

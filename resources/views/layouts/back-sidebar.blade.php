@@ -37,6 +37,9 @@
                         <li class="{{$menu=='units'?'active':''}}">
                             <a href="{{url('/admin/units')}}"><i class=""></i> หน่วยนับสินค้า </a>
                         </li>
+                        <li class="">
+                            <a href="{{url('/admin/promotions')}}"><i class=""></i> โปรโมชั่น </a>
+                        </li>
                         <li class="{{$menu=='contacts'?'active':''}}">
                             <a href="{{url('/admin/contacts')}}"><i class=""></i> ข้อมูลติดต่อ </a>
                         </li>

@@ -58,11 +58,11 @@ Route::group(['middleware' => 'admin'], function () {
         Route::resource('/po','Admin\ProductOrderController');
 
         //promotion controller
-        Route::get('/pmt/dataTable','Admin\PromotionController@dataTable');
-        Route::post('/pmt/update','Admin\PromotionController@update');
-        Route::post('/pmt/changeStatus','Admin\PromotionController@changeStatus');
-        Route::post('/pmt/delete','Admin\PromotionController@destroy');
-        Route::resource('/pmt','Admin\PromotionController');
+        Route::get('/promotions/dataTable','Admin\PromotionController@dataTable');
+        Route::post('/promotions/update','Admin\PromotionController@update');
+        Route::post('/promotions/changeStatus','Admin\PromotionController@changeStatus');
+        Route::post('/promotions/delete','Admin\PromotionController@destroy');
+        Route::resource('/promotions','Admin\PromotionController');
 
         //member controller
         Route::get('/member/dataTable','Admin\MembersController@dataTable');
