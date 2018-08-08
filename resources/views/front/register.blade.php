@@ -1,6 +1,8 @@
 @extends('front.layout')
 
-@section('title') @endsection
+@section('title')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 
 @section('css')
 @endsection
@@ -19,7 +21,8 @@
                 <div class="register_content">
                     <div class="col-md-6 col-md-offset-3 col-sm-offset-3">
                         <div class="register-page">
-                                <form>
+                                <form id="register">
+                                    {{ csrf_field() }}
                                     <div class="header-register text-center">
                                         <h2>สมัครสมาชิก</h2>
                                         <br/>
@@ -30,15 +33,10 @@
                                                 <input type="text" class="form-control" name="name" placeholder="ชื่อ-นามสกุล" >
                                             </div>
                                         </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="name" placeholder="ที่อยู่" >
-                                            </div>
-                                        </div>
 
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="email" placeholder="เบอร์โทรศัพท์" >
+                                                <input type="text" class="form-control" name="mobile" placeholder="เบอร์โทรศัพท์" >
                                             </div>
                                         </div>
                                         <div class="col-sm-12">
@@ -48,16 +46,16 @@
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <input type="password" class="form-control" name="name" placeholder="รหัสผ่าน" >
+                                                <input type="password" class="form-control" name="password" placeholder="รหัสผ่าน" >
                                             </div>
                                         </div>
 
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <input type="pasword" class="form-control" name="email" placeholder="ยืนยันรหัสผ่าน" >
+                                                <input type="password" class="form-control" name="password_confirmation" placeholder="ยืนยันรหัสผ่าน" >
                                             </div>
                                         </div>
-                                        
+
                                         <div class="center-content">
                                             <input type="submit" value="สมัครสมาชิก" class="btn-ghost btn-green">
                                         </div>
@@ -70,7 +68,7 @@
                                     <button type="submit" data-toggle="modal" data-target="#myModal" class="btn-ghost btn-green">เข้าสู่ระบบ</button>
                                 </div>
                         </div>
-                                
+
                     </div>
                 </div>
 
@@ -109,4 +107,26 @@
 @endsection
 
 @section('js')
+<script src="{{asset('global/jquery/dist/jquery.min.js')}}"></script>
+<script>
+$('#register').submit(function (e) {
+    e.preventDefault();
+    var form = $(this);
+    $.ajax({
+        method: "POST",
+        url: url_gb + "/member",
+        dataType: 'json',
+        data: $(this).serialize()
+    }).done(function (rec) {
+        if (rec.status == 0) {
+            alert('Successfully');
+            $('#formid').find('input, textarea').val('');
+        } else {
+            alert('Unsuccessfully request');
+        }
+    }).fail(function () {
+        alert('Unsuccessfully request');
+    });
+});
+</script>
 @endsection

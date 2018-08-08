@@ -40,6 +40,10 @@
                         <li class="">
                             <a href="{{url('/admin/promotions')}}"><i class=""></i> โปรโมชั่น </a>
                         </li>
+                        <li class="{{$menu=='contacts'?'active':''}}">
+                            <a href="{{url('/admin/contacts')}}"><i class=""></i> ข้อมูลติดต่อ </a>
+                        </li>
+
                         {{--  <li>
                             <a href="#"> Second Level Item </a>
                         </li>  --}}
@@ -79,7 +83,7 @@
         <ul class="sidebar-menu metismenu" id="customize-menu">
             <li>
                 <a href="">
-                    <i class="fa fa-cog"></i> Customize 
+                    <i class="fa fa-cog"></i> Customize
                 </a>
             </li>
         </ul>

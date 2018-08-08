@@ -35,12 +35,11 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">ลำดับ</th>
-                                            <th class="text-center">ประเภท{{$title}}</th>
-                                            <th class="text-center">ชื่อ{{$title}}</th>
-                                            <th class="text-center">ราคา{{$title}}</th>
-                                            <th class="text-center">ราคาขาย{{$title}}</th>
-                                            <th class="text-center">หน่วยนับ{{$title}}</th>
-                                            <th class="text-center">วันที่เพิ่ม</th>
+                                            <th class="text-center">ชื่อ-นามสกุล{{$title}}</th>
+                                            <th class="text-center">อีเมล{{$title}}</th>
+                                            <th class="text-center">เบอร์โทร{{$title}}</th>
+                                            <th class="text-center">หัวเรื่อง{{$title}}</th>
+                                            <th class="text-center">รายละเอียด{{$title}}</th>
                                             <th class="text-center">สถานะ{{$title}}</th>
                                             <th class="text-center">การกระทำ</th>
                                         </tr>
@@ -69,75 +68,39 @@
                     <form id="formAdd" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="file" class="col-sm-2 col-form-label">รูปภาพ{{$title}}</label>
+                            <label for="name" class="col-sm-2 col-form-label">ชื่อ-นามสกุล{{$title}}</label>
                             <div class="col-sm-10">
-                                <div id="photo" orakuploader="on"></div>
-                            </div>
-                            <div class="col-sm-10">
-
+                            <input type="text" class="form-control" name="name" placeholder="ชื่อ-นามสกุล{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="product_name" class="col-sm-2 col-form-label">ชื่อ{{$title}}</label>
+                            <label for="email" class="col-sm-2 col-form-label">อีเมล{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="ชื่อ{{$title}}" class="form-control" name="product_name" placeholder="ชื่อ{{$title}}">
+                            <input type="text" class="form-control" name="email" placeholder="อีเมล{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="product_price" class="col-sm-2 col-form-label">ราคา{{$title}}</label>
+                            <label for="tel" class="col-sm-2 col-form-label">เบอร์โทร{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="ราคา{{$title}}" class="form-control" name="product_price" placeholder="ราคา{{$title}}">
+                            <input type="text" class="form-control" name="tel" placeholder="เบอร์โทร{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="sell_price" class="col-sm-2 col-form-label">ราคาขาย{{$title}}</label>
+                            <label for="title" class="col-sm-2 col-form-label">หัวเรื่อง{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="ราคาขาย{{$title}}" class="form-control" name="sell_price" placeholder="ราคาขาย{{$title}}">
+                            <input type="text" class="form-control" name="title" placeholder="หัวเรื่อง{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="unit_id" class="col-sm-2 col-form-label">หน่วยนับ{{$title}}</label>
+                            <label for="detail" class="col-sm-2 col-form-label">รายละเอียด{{$title}}</label>
                             <div class="col-sm-10">
-                                <div class="form-group">
-                                    <select class="form-control" name="unit_id">
-                                        <option value="">เลือกหน่วยนับ{{$title}}</option>
-                                        @foreach($Units as $unit)
-                                        <option value="{{ $unit->unit_id }}">{{ $unit->unit_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                <textarea class="form-control" name="detail" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="category_id" class="col-sm-2 col-form-label">ประเภท{{$title}}</label>
+                            <label for="remark" class="col-sm-2 col-form-label">คำแนะนำ{{$title}}</label>
                             <div class="col-sm-10">
-                                <div class="form-group">
-                                    <select class="form-control" name="category_id">
-                                        <option value="">เลือกประเภท{{$title}}</option>
-                                        @foreach($Categories as $category)
-                                        <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="description" class="col-sm-2 col-form-label">รายละเอียด{{$title}}</label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control" name="description" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="description" class="col-sm-2 col-form-label">สถานะ{{$title}}</label>
-                            <div class="col-sm-10">
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="status" value="T"> เปิดใช้งาน
-                                    </label>
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="status" value="F"> ไม่เปิดใช้งาน
-                                    </label>
-                                </div>
+                                <textarea class="form-control" name="remark" rows="3"></textarea>
                             </div>
                         </div>
                     </div>
@@ -155,7 +118,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <form id="formEdit">
-                    <input type="hidden" name="product_id" id="product_id">
+                    <input type="hidden" name="id" id="contact_id">
                     <div class="modal-header">
                         <h5>เพิ่ม{{$title}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -164,72 +127,39 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="product_name" class="col-sm-2 col-form-label">รูปภาพ{{$title}}</label>
+                            <label for="name" class="col-sm-2 col-form-label">ชื่อ-นามสกุล{{$title}}</label>
                             <div class="col-sm-10">
-                                <div id="editphoto" orakuploader="on"></div>
+                            <input type="text" id="name" class="form-control" name="name" placeholder="ชื่อ-นามสกุล{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="product_name" class="col-sm-2 col-form-label">ชื่อ{{$title}}</label>
+                            <label for="email" class="col-sm-2 col-form-label">อีเมล{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="ชื่อ{{$title}}" class="form-control" name="product_name" id="product_name" placeholder="ชื่อ{{$title}}">
+                            <input type="text" id="email" class="form-control" name="email" placeholder="อีเมล{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="product_price" class="col-sm-2 col-form-label">ราคา{{$title}}</label>
+                            <label for="tel" class="col-sm-2 col-form-label">เบอร์โทร{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="ราคา{{$title}}" class="form-control" name="product_price" id="product_price" placeholder="ราคา{{$title}}">
+                            <input type="text" id="tel" class="form-control" name="tel" placeholder="เบอร์โทร{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="sell_price" class="col-sm-2 col-form-label">ราคาขาย{{$title}}</label>
+                            <label for="title" class="col-sm-2 col-form-label">หัวเรื่อง{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="ราคาขาย{{$title}}" class="form-control" name="sell_price" id="sell_price" placeholder="ราคาขาย{{$title}}">
+                            <input type="text" id="title" class="form-control" name="title" placeholder="หัวเรื่อง{{$title}}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="unit_id" class="col-sm-2 col-form-label">หน่วยนับ{{$title}}</label>
+                            <label for="detail" class="col-sm-2 col-form-label">รายละเอียด{{$title}}</label>
                             <div class="col-sm-10">
-                                <div class="form-group">
-                                    <select class="form-control" name="unit_id" id="unit_id">
-                                        <option value="">เลือกหน่วยนับ{{$title}}</option>
-                                        @foreach($Units as $unit)
-                                        <option value="{{ $unit->unit_id }}">{{ $unit->unit_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                <textarea class="form-control" id="detail" name="detail" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="category_id" class="col-sm-2 col-form-label">ประเภท{{$title}}</label>
+                            <label for="remark" class="col-sm-2 col-form-label">คำแนะนำ{{$title}}</label>
                             <div class="col-sm-10">
-                                <div class="form-group">
-                                    <select class="form-control" name="category_id" id="category_id">
-                                        <option value="">เลือกประเภท{{$title}}</option>
-                                        @foreach($Categories as $category)
-                                        <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="description" class="col-sm-2 col-form-label">รายละเอียด{{$title}}</label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control" name="description" id="description" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="description" class="col-sm-2 col-form-label">สถานะ{{$title}}</label>
-                            <div class="col-sm-10">
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="status" value="T"> เปิดใช้งาน
-                                    </label>
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="status" value="F"> ไม่เปิดใช้งาน
-                                    </label>
-                                </div>
+                                <textarea class="form-control" id="remark" name="remark" rows="3"></textarea>
                             </div>
                         </div>
                     </div>
@@ -314,12 +244,16 @@
     });
     $( "#formAdd" ).validate({
         rules: {
-            product_name: "required",
-            product_price: "required",
+            name: "required",
+            email: "required",
+            title: "required",
+            detail: "required",
         },
         messages: {
-            product_name: "กรุณาระบุ",
-            product_price: "กรุณาระบุ",
+            name: "กรุณาระบุ",
+            email: "กรุณาระบุ",
+            title: "กรุณาระบุ",
+            detail: "กรุณาระบุ",
         },
         errorElement: "span",
         errorPlacement: function ( error, element ) {
@@ -344,7 +278,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 method : "POST",
-                url : url+"/admin/products",
+                url : url+"/admin/contacts",
                 dataType : 'json',
                 data : $(form).serialize()
             }).done(function(rec){
@@ -371,31 +305,31 @@
         document.getElementById('formEdit').reset();
         $.ajax({
             method : "GET",
-            url : url+"/admin/products/"+id,
+            url : url+"/admin/contacts/"+id,
             dataType : 'json'
         }).done(function(rec){
-            // console.log(rec.product_image);
-            editphoto(rec.product_image);
-            $( "#product_id" ).val( id );
-            $( "#product_name" ).val( rec.product_name );
-            $( "#product_price" ).val( rec.product_price );
-            $( "#sell_price" ).val( rec.sell_price );
-            $( "#description" ).val( rec.description );
-            $( "#category_id" ).val( rec.category_id );
-            $( "#unit_id" ).val( rec.unit_id );
-            //$( "#product_image" ).val(  );
-            $("#modalEdit input[value="+rec.status+"]").prop('checked', true);
+            $( "#contact_id" ).val( id );
+            $( "#name" ).val( rec.name );
+            $( "#email" ).val( rec.email );
+            $( "#tel" ).val( rec.tel );
+            $( "#title" ).val( rec.title );
+            $( "#detail" ).val( rec.detail );
+            $( "#remark" ).val( rec.remark );
             $( "#modalEdit" ).modal( "show" );
         });
     });
     $( "#formEdit" ).validate({
         rules: {
-            product_name: "required",
-            product_price: "required",
+            name: "required",
+            email: "required",
+            title: "required",
+            detail: "required",
         },
         messages: {
-            product_name: "กรุณาระบุ",
-            product_price: "กรุณาระบุ",
+            name: "กรุณาระบุ",
+            email: "กรุณาระบุ",
+            title: "กรุณาระบุ",
+            detail: "กรุณาระบุ",
         },
         errorElement: "span",
         errorPlacement: function ( error, element ) {
@@ -420,7 +354,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 method : "POST",
-                url : url+"/admin/products/update",
+                url : url+"/admin/contacts/update",
                 dataType : 'json',
                 data : $(form).serialize()
             }).done(function(rec){
@@ -459,7 +393,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     method : "post",
-                    url : url+"/admin/products/delete",
+                    url : url+"/admin/contacts/delete",
                     dataType : 'json',
                     data : {'id':id}
                 }).done(function(rec){
@@ -477,31 +411,6 @@
     });
     {{--  End Delete  --}}
 
-    {{--  Start Status  --}}
-    function changeStatus(id,value){
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            method : "post",
-            url : url+"/admin/products/changeStatus",
-            dataType : 'json',
-            data : {
-                'id':id,
-                'status':value
-            }
-        }).done(function(rec){
-            if(rec.type=='success'){
-                swal({
-                    confirmButtonText:'ตกลง',title: rec.title,text: rec.text,type: rec.type
-                });
-                dataTable.api().ajax.reload();
-            }else{
-                swal(rec.title,rec.text,rec.type);
-            }
-        });
-    }
-    {{--  End Status  --}}
 </script>
 
 <!-- datatables -->
@@ -512,19 +421,18 @@
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": url+"/admin/products/dataTable",
+            "url": url+"/admin/contacts/dataTable",
             // "data": function ( d ) {
             // }
         },
         "columns": [
             { "data": "DT_Row_Index" , "name": "DT_Row_Index" , "className": "text-center", "orderable": false , "searchable": false },
-            { "data": "category_name" , "name":"category.category_name" , "className": "text-center",},
-            { "data": "product_name" , "name":"product_name" },
-            { "data": "product_price" , "name":"product_price" , "className": "text-ritght"},
-            { "data": "sell_price" , "name":"sell_price" , "className": "text-ritght"},
-            { "data": "unit_name" , "name":"unit.unit_name" , "className": "text-center"},
-            { "data": "created_at" , "name":"created_at"},
-            { "data": "status" , "name":"status" , "className": "text-center", "searchable": false},
+            { "data": "name" , "className": "text-center",},
+            { "data": "email" },
+            { "data": "tel" , "className": "text-ritght"},
+            { "data": "title" },
+            { "data": "detail" },
+            { "data": "read", "searchable": false },
             { "data": "action" , "name":"action" , "className": "text-center" ,"orderable": false, "searchable": false },
         ],
         "language": {
