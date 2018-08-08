@@ -22,6 +22,7 @@
         <!-- Styles -->
         <link href="{{ asset('global/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
         <link href="{{ asset('global/datatables.net-dt/css/jquery.dataTables.css') }}" rel="stylesheet">
+       
 
         <!-- font -->
         <link href="{{ asset('font/CSChatThai/font.css') }}" rel="stylesheet">
@@ -89,6 +90,8 @@
         <script src="{{ asset('vendor/laravel-filemanager/js/cropper.min.js') }}"></script>
         <script src="{{ asset('vendor/laravel-filemanager/js/jquery.form.min.js') }}"></script>
         <script src="{{ asset('vendor/laravel-filemanager/js/dropzone.min.js') }}"></script>
+
+        
 
         <script src="{{asset('back/js/vendor.js')}}"></script>
         <script src="{{asset('back/js/app.js')}}"></script>

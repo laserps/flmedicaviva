@@ -37,6 +37,9 @@
                         <li class="">
                             <a href="{{url('/admin/units')}}"><i class=""></i> หน่วยนับสินค้า </a>
                         </li>
+                        <li class="">
+                            <a href="{{url('/admin/promotions')}}"><i class=""></i> โปรโมชั่น </a>
+                        </li>
 
                         {{--  <li>
                             <a href="#"> Second Level Item </a>
