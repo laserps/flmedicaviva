@@ -7,7 +7,9 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>@yield('css')</title>
-        <link rel="stylesheet" href="{{asset('front/css/bootstrap.min.css')}}">
+        {{--  <link rel="stylesheet" href="{{asset('front/css/bootstrap.min.css')}}">  --}}
+        <link rel="stylesheet" href="{{asset('global/bootstrap/dist/css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('global/bootstrap/dist/css/bootstrap.min.css.map')}}">
         <link rel="stylesheet" href="{{asset('front/css/flexslider.css')}}">
         <link rel="stylesheet" href="{{asset('front/css/main.css')}}">
         <link rel="stylesheet" href="{{asset('front/css/responsive.css')}}">
@@ -26,10 +28,12 @@
 
     @include('front.theme.footer')
     <!-- JS FILES -->
-    <script src="{{asset('font/fontawesome-free-5.0.10/svg-with-js/js/fontawesome.min.js')}}"></script>
+    
     <script src="{{asset('js/jquery/dist/jquery.min.js')}}"></script>
-    <script src="{{asset('front/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('front/js/jquery.flexslider-min.js')}}"></script>
+    {{--  <script src="{{asset('front/js/bootstrap.min.js')}}"></script>  --}}
+    {{--  <script src="{{asset('front/js/bootstrap.min.js')}}"></script>  --}}
+    <script src="{{asset('global/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('front/js/retina.min.js')}}"></script>
     <script src="{{asset('front/js/modernizr.js')}}"></script>
     <script src="{{asset('front/js/main.js')}}"></script>

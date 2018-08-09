@@ -19,7 +19,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "bootstrap": "^4.0.0-alpha.6",
+        "bootstrap": "^3.3.7",
         "clipboard": "^2.0.0",
         "datatables.net-dt": "^1.10.16",
         "jquery-validation": "^1.17.0",
