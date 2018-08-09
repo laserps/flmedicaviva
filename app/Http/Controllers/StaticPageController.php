@@ -137,7 +137,10 @@ class StaticPageController extends Controller
     }
     public function memberEdit(Request $request) {
         if(\Auth::id()) {
-            return \View::make('front.editProfile',['data' => \Auth::user()]);
+            return \View::make('front.editProfile',[
+                'data' => \Auth::user(),
+                'address' => \App\Models\CustomerAddress::where('customer_id',\Auth::id())->get(),
+            ]);
         } else {
             return redirect('/');
         }
@@ -145,6 +148,7 @@ class StaticPageController extends Controller
 
     public function memberUpdate(Request $request) {
         $input_all = $request->all();
+        dd($input_all);
         unset($input_all['_token']);
         $input_all['updated_at'] = date('Y-m-d H:i:s');
         $validator = Validator::make($request->all(), [
