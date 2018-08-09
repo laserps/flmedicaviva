@@ -24,7 +24,7 @@
                                 <form id="updateUserData">
                                     {{ csrf_field() }}
                                     <div class="header-register text-center">
-                                        <h2>แก้ไขข้อมูลสมาชิก</h2>
+                                        <h2>แก้ไขข้อมูลส่วนตัว</h2>
                                         <br/>
                                     </div>
 
@@ -60,9 +60,19 @@
                                         </div>
                                         @if($address)
                                         @foreach($address as $k => $v)
-                                        <div class="col-sm-12">
-                                            <label for="">ที่อยู่ {{($k+1)}}</label>
-                                            <input type="hidden" name="address[{{$k}}][id]" value="{{$v->id}}">
+                                        <div class="address">
+                                        <div class="col-sm-6">
+                                            <label for="">ที่อยู่</label>
+                                            <div class="form-group">
+                                                <input type="hidden" name="address[{{$k}}][id]" value="{{$v->id}}">
+                                                <input type="radio" class="status" name="address[{{$k}}][status]"  value="T" {{($v->status=='T')?'checked':''}}> เลือกที่อยู่หลัก
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                            <button type="button" class="btn brn-danger">ลบ</button>
+                                        </div>
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
@@ -89,11 +99,12 @@
                                                 <input type="text" class="form-control" name="address[{{$k}}][zipcode]" placeholder="รหัสไปรษณีย์" value="{{$v->zipcode}}" >
                                             </div>
                                         </div>
+                                    </div>
 
                                         @endforeach
                                         @endif
                                         <div class="left-content">
-                                            <button type="button" name="button" class="btn btn-default" style="width:150px;height:40px;background-color:green;" id="add_address">เพิ่มที่อยู่</button>
+                                            <button type="button" class="add_address btn btn-info" id="add_address">เพิ่มที่อยู่</button>
                                         </div>
                                         <div class="center-content">
                                             <input type="submit" value="บันทึก" class="btn-ghost btn-green">
@@ -114,6 +125,49 @@
 <script src="{{asset('global/jquery/dist/jquery.min.js')}}"></script>
 <script>
 var address_index = {{sizeof($address)}};
+$('#add_address').click(function(){
+    console.log(123);
+    $('body').find('div.address:last').append(`<div class="address">
+        <div class="col-sm-6">
+            <label for="">ที่อยู่</label>
+            <div class="form-group">
+                <input type="radio" class="status" name="address[`+address_index+`][status]" value="T"> เลือกที่อยู่หลัก
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <button type="button" class="btn brn-danger">ลบ</button>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <input type="text" class="form-control" name="address[`+address_index+`][address]" placeholder="" value="" >
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <input type="text" class="form-control" name="address[`+address_index+`][district]" placeholder="ตำบล" value="" >
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <input type="text" class="form-control" name="address[`+address_index+`][amphur]" placeholder="อำเภอ" value="" >
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <input type="text" class="form-control" name="address[`+address_index+`][province]" placeholder="จังหวัด" value="" >
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <input type="text" class="form-control" name="address[`+address_index+`][zipcode]" placeholder="รหัสไปรษณีย์" value="" >
+            </div>
+        </div></div>
+    `);
+    address_index++;
+});
+$('body').on('click','.status',function() {
+    $('body').find('.status').not(this).prop('checked',false);
+});
 $('#updateUserData').submit(function (e) {
     e.preventDefault();
     var form = $(this);

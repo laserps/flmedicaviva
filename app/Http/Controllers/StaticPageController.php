@@ -148,8 +148,9 @@ class StaticPageController extends Controller
 
     public function memberUpdate(Request $request) {
         $input_all = $request->all();
-        dd($input_all);
+        $address = $input_all['address'];
         unset($input_all['_token']);
+        unset($input_all['address']);
         $input_all['updated_at'] = date('Y-m-d H:i:s');
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -160,6 +161,23 @@ class StaticPageController extends Controller
             try {
                 $data_insert = $input_all;
                 \App\Models\User::where('id',\Auth::id())->update($data_insert);
+                $arr = [];
+                foreach($address as $k => $v) {
+                    $v['customer_id'] = \Auth::id();
+                    if(!isset($v->status)) {
+                        $v['status'] = 'F';
+                    }
+                    $id = '';
+                    if(isset($v['id'])) {
+                        $id = $v->id;
+                        unset($v['id']);
+                        \App\Models\CustomerAddress::where('id',$id)->update($v);
+                    } else {
+                        $id = \App\Models\CustomerAddress::insertGetId($v);
+                    }
+                    $arr[] = $id;
+                }
+                \App\Models\CustomerAddress::where('customer_id',\Auth::id())->whereNotIn('id',$arr)->delete();
                 \DB::commit();
                 $return['status'] = 1;
                 $return['content'] = 'สำเร็จ';
