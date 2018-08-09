@@ -63,7 +63,7 @@ h5 {
 	font-weight: 700;
 
 }
-.btn {
+/* .btn {
 	background-color: #333;
 	margin-top: 40px;
 	color: #fff;
@@ -81,7 +81,7 @@ h5 {
 }
 .btn-large {
 	padding: 15px 40px;
-}
+} */
 
 /* ------------------------------------------------------------------------------
 	 General Style
@@ -849,12 +849,11 @@ ul li span{
 	width: 40%;
 }
 /*----------------- button ------------------*/
-.btn-ghost {
+/* .btn-ghost {
     color: #ffffff;
     background-color: #00b0ad;
     background-image: none;
     border-color: #00b0ad;
-    /* margin: 0px 60px; */
 }
 
 .btn-green {
@@ -882,7 +881,7 @@ ul li span{
 }
 .btn-green:focus, .btn-green:hover {
     text-decoration: none;
-}
+} */
 
 /*------------------ nav tab -------------------*/
 .nav-tabs { border-bottom: 2px solid #DDD; }
