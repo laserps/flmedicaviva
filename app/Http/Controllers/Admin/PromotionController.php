@@ -115,7 +115,9 @@ class PromotionController extends Controller
      */
     public function show($id)
     {
-        return \App\Models\promotions::where('promotion_id',$id)->first();
+        $data['promotion'] = \App\Models\Promotions::where('promotion_id',$id)->first();
+        $data['products'] = \App\Models\Products::get();
+        return $data;
     }
 
     /**

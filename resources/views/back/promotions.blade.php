@@ -160,7 +160,14 @@
     <!-- Modal Edit -->
     <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
+
             <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>แก้ไข{{$title}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                 <form id="formEdit" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group row">
@@ -180,7 +187,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group row indexfirst">
                             <label for="description" class="col-sm-2 col-form-label">สินค้าที่{{$title}}</label>
                             <div class="col-sm-6">
                                 {{--  <input type="text" class="form-control" name="promotion_item[]" placeholder="สินค้า">  --}}
@@ -221,7 +228,10 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>                 
+                        </div>
+                        
+                        
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
@@ -247,9 +257,9 @@
         $( "#modalAdd" ).modal( "show" );
     });
 
-    $( "#btn-clone" ).click(function(e) {
-        $( "#forclone" ).clone().removeClass('hidden').appendTo( "#clone" );
-        $("#clone select[name='promotion_item[]']").select2();
+    $( "#formAdd #btn-clone" ).click(function(e) {
+        $( "#forclone" ).clone().removeClass('hidden').appendTo( "#formAdd #clone" );
+        $("#formAdd #clone select[name='promotion_item[]']").select2();
         e.preventDefault();
         $("#formAdd input[name='qty[]']").each(function() {
             $(this).rules("add", 
@@ -263,8 +273,23 @@
 
     });
 
-    $( "#formAdd" ).validate({
+    $( "#formEdit #btn-clone" ).click(function(e) {
+        $( "#forclone" ).clone().removeClass('hidden').appendTo( "#formEdit #clone" );
+        $("#formEdit #clone select[name='promotion_item[]']").select2();
+        e.preventDefault();
+        $("#formEdit input[name='qty[]']").each(function() {
+            $(this).rules("add", 
+            {
+                required: true,
+                messages: {
+                    required: "กรุณาระบุ",
+                },
+            });
+        });
 
+    });
+
+    $( "#formAdd" ).validate({
         rules: {
             promotion_name: "required",
             sell_price: "required",
@@ -328,19 +353,57 @@
     {{--  Start Edit  --}}
     $('body').on('click', '.edit-data', function(){
         var id = $(this).data('id');
+        $('#formEdit #clone').html('');
         document.getElementById('formEdit').reset();
         $.ajax({
             method : "GET",
             url : url+"/admin/promotions/"+id,
             dataType : 'json'
         }).done(function(rec){
-            console.log(rec.promotion_item);
-            {{--  editphoto(rec.promotion_image);
-            $( "#formEdit input[name='promotion_id']" ).val( rec.promotion_id );
-            $( "#formEdit input[name='promotion_name']" ).val( rec.promotion_name );
-            $( "#formEdit input[name='sell_price']" ).val( rec.sell_price );
-            $("#formEdit input[value="+rec.status+"]").prop('checked', true);
-            $( "#modalEdit" ).modal( "show" );  --}}
+            $.each(jQuery.parseJSON(rec.promotion.promotion_item), function( index, value ) {
+                    if(index!=0){
+                        var stinghtml='';
+                        stinghtml+=`
+                        <div class="form-group row index`+index+`" id="forclone" aria-hidden="true">
+                            <label for="description" class="col-sm-2 col-form-label">สินค้าที่{{$title}}</label>
+                            <div class="col-sm-6">
+                                <select name="promotion_item[]" class="form-control sss">
+                                    <option value="null">เลือกสินค้า</option>`;
+                                $.each(rec.products, function( i, p ) {
+                                    if(p.product_id==value.product_id){
+                                        stinghtml+=`<option value="`+p.product_id+`" selected>`+p.product_name+`</option>`;
+                                    }else{
+                                        stinghtml+=`<option value="`+p.product_id+`"  >`+p.product_name+`</option>`;
+                                    }
+                                }); 
+                            stinghtml+=`
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control qty" name="qty[]" placeholder="จำนวน">
+                            </div>
+                            `;
+                        stinghtml+=`
+                        <div class="col-sm-1">
+                            <button type="button" class="btn btn-danger btn-sm pull-right" onclick="removeElement(this)">
+                                -
+                            </button>
+                        </div>`;
+                        stinghtml+=`</div>`;
+                        $('#formEdit #clone').append(stinghtml);
+                        $(".index"+index+" input[name='qty[]']").val(value.qty);
+                }else{
+                    $(".indexfirst select[name='promotion_item[]']").val(value.product_id);
+                    $(".indexfirst input[name='qty[]']").val(value.qty);
+                }
+            });
+            
+            editphoto(rec.promotion_image);
+            $( "#formEdit input[name='promotion_id']" ).val( rec.promotion.promotion_id );
+            $( "#formEdit input[name='promotion_name']" ).val( rec.promotion.promotion_name );
+            $( "#formEdit input[name='sell_price']" ).val( rec.promotion.sell_price );
+            $("#formEdit input[value="+rec.promotion.status+"]").prop('checked', true);
+            $( "#modalEdit" ).modal( "show" );
         });
     });
     $( "#formEdit" ).validate({
