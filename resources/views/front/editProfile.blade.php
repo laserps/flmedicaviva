@@ -58,7 +58,43 @@
                                                 <input type="text" class="form-control" name="age" placeholder="อายุ" value="{{$data->age}}" >
                                             </div>
                                         </div>
+                                        @if($address)
+                                        @foreach($address as $k => $v)
+                                        <div class="col-sm-12">
+                                            <label for="">ที่อยู่ {{($k+1)}}</label>
+                                            <input type="hidden" name="address[{{$k}}][id]" value="{{$v->id}}">
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="address[{{$k}}][address]" placeholder="" value="{{$v->address}}" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="address[{{$k}}][district]" placeholder="ตำบล" value="{{$v->district}}" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="address[{{$k}}][amphur]" placeholder="อำเภอ" value="{{$v->amphur}}" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="address[{{$k}}][province]" placeholder="จังหวัด" value="{{$v->province}}" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="address[{{$k}}][zipcode]" placeholder="รหัสไปรษณีย์" value="{{$v->zipcode}}" >
+                                            </div>
+                                        </div>
 
+                                        @endforeach
+                                        @endif
+                                        <div class="left-content">
+                                            <button type="button" name="button" class="btn btn-default" style="width:150px;height:40px;background-color:green;" id="add_address">เพิ่มที่อยู่</button>
+                                        </div>
                                         <div class="center-content">
                                             <input type="submit" value="บันทึก" class="btn-ghost btn-green">
                                         </div>
@@ -77,6 +113,7 @@
 @section('js')
 <script src="{{asset('global/jquery/dist/jquery.min.js')}}"></script>
 <script>
+var address_index = {{sizeof($address)}};
 $('#updateUserData').submit(function (e) {
     e.preventDefault();
     var form = $(this);
