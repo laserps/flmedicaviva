@@ -57,8 +57,6 @@
     <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-
-
                     <div class="modal-header">
                         <h5>เพิ่ม{{$title}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -94,7 +92,7 @@
                         <div class="form-group row">
                             <label for="file" class="col-sm-2 col-form-label">รูปภาพ{{$title}}</label>
                             <div class="col-sm-10">
-                                <div id="photo" orakuploader="on"></div>
+                                <div id="promotion_picture" orakuploader="on"></div>
                             </div>
                             <div class="col-sm-10">
 
@@ -160,74 +158,57 @@
     </div>
 
     <!-- Modal Edit -->
-    {{--  <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <form id="formEdit">
-                    <input type="hidden" name="promotion_id" id="promotion_id">
-                    <div class="modal-header">
-                        <h5>เพิ่ม{{$title}}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                <form id="formEdit" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group row">
-                            <label for="promotion_name" class="col-sm-2 col-form-label">รูปภาพ{{$title}}</label>
+                            <label for="file" class="col-sm-2 col-form-label">รูปภาพ{{$title}}</label>
                             <div class="col-sm-10">
-                                <div id="editphoto" orakuploader="on"></div>
+                                <div id="promotion_picture_edit" orakuploader="on"></div>
+                            </div>
+                            <div class="col-sm-10">
+
                             </div>
                         </div>
+                        <input type="text" class="form-control hidden" name="promotion_id">
                         <div class="form-group row">
                             <label for="promotion_name" class="col-sm-2 col-form-label">ชื่อ{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="ชื่อ{{$title}}" class="form-control" name="promotion_name" id="promotion_name" placeholder="ชื่อ{{$title}}">
+                            <input type="ชื่อ{{$title}}" class="form-control" name="promotion_name" placeholder="ชื่อ{{$title}}">
                             </div>
                         </div>
+
                         <div class="form-group row">
-                            <label for="promotion_price" class="col-sm-2 col-form-label">ราคา{{$title}}</label>
-                            <div class="col-sm-10">
-                            <input type="ราคา{{$title}}" class="form-control" name="promotion_price" id="promotion_price" placeholder="ราคา{{$title}}">
+                            <label for="description" class="col-sm-2 col-form-label">สินค้าที่{{$title}}</label>
+                            <div class="col-sm-6">
+                                {{--  <input type="text" class="form-control" name="promotion_item[]" placeholder="สินค้า">  --}}
+                                <select name="promotion_item[]" class="form-control" id="static">
+                                    <option value="null">เลือกสินค้า</option>
+                                    @foreach($products as $product)
+                                    <option value="{{$product->product_id}}">{{$product->product_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control qty" name="qty[]" placeholder="จำนวน">
+                            </div>
+                            <div class="col-sm-1">
+                                <button type="button" class="btn btn-primary btn-sm pull-right" id="btn-clone">
+                                    +
+                                </button>
                             </div>
                         </div>
+                        <div id="clone"></div>
+
                         <div class="form-group row">
                             <label for="sell_price" class="col-sm-2 col-form-label">ราคาขาย{{$title}}</label>
                             <div class="col-sm-10">
-                            <input type="ราคาขาย{{$title}}" class="form-control" name="sell_price" id="sell_price" placeholder="ราคาขาย{{$title}}">
+                            <input type="ราคาขาย{{$title}}" class="form-control" name="sell_price" placeholder="ราคาขาย{{$title}}">
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="unit_id" class="col-sm-2 col-form-label">หน่วยนับ{{$title}}</label>
-                            <div class="col-sm-10">
-                                <div class="form-group">
-                                    <select class="form-control" name="unit_id" id="unit_id">
-                                        <option value="">เลือกหน่วยนับ{{$title}}</option>
-                                        @foreach($Units as $unit)
-                                        <option value="{{ $unit->unit_id }}">{{ $unit->unit_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="category_id" class="col-sm-2 col-form-label">ประเภท{{$title}}</label>
-                            <div class="col-sm-10">
-                                <div class="form-group">
-                                    <select class="form-control" name="category_id" id="category_id">
-                                        <option value="">เลือกประเภท{{$title}}</option>
-                                        @foreach($Categories as $category)
-                                        <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="description" class="col-sm-2 col-form-label">รายละเอียด{{$title}}</label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control" name="description" id="description" rows="3"></textarea>
-                            </div>
-                        </div>
+
                         <div class="form-group row">
                             <label for="description" class="col-sm-2 col-form-label">สถานะ{{$title}}</label>
                             <div class="col-sm-10">
@@ -249,7 +230,7 @@
                 </form>
             </div>
         </div>
-    </div>  --}}
+    </div>
 </article>
 
 @endsection
@@ -353,18 +334,13 @@
             url : url+"/admin/promotions/"+id,
             dataType : 'json'
         }).done(function(rec){
-            // console.log(rec.promotion_image);
-            editphoto(rec.promotion_image);
-            $( "#promotion_id" ).val( id );
-            $( "#promotion_name" ).val( rec.promotion_name );
-            $( "#promotion_price" ).val( rec.promotion_price );
-            $( "#sell_price" ).val( rec.sell_price );
-            $( "#description" ).val( rec.description );
-            $( "#category_id" ).val( rec.category_id );
-            $( "#unit_id" ).val( rec.unit_id );
-            //$( "#promotion_image" ).val(  );
-            $("#modalEdit input[value="+rec.status+"]").prop('checked', true);
-            $( "#modalEdit" ).modal( "show" );
+            console.log(rec.promotion_item);
+            {{--  editphoto(rec.promotion_image);
+            $( "#formEdit input[name='promotion_id']" ).val( rec.promotion_id );
+            $( "#formEdit input[name='promotion_name']" ).val( rec.promotion_name );
+            $( "#formEdit input[name='sell_price']" ).val( rec.sell_price );
+            $("#formEdit input[value="+rec.status+"]").prop('checked', true);
+            $( "#modalEdit" ).modal( "show" );  --}}
         });
     });
     $( "#formEdit" ).validate({
@@ -526,8 +502,8 @@
 <script src="{{asset('global/orakuploader/jquery-ui.min.js')}}"></script>
 <script src="{{asset('global/orakuploader/orakuploader.js')}}"></script>
 <script src="{{asset('global/orakuploader/adminusage.js')}}"></script>
-{{-- <script>
-    $('#photo').orakuploader({
+<script>
+    $('#promotion_picture').orakuploader({
         orakuploader_path         : url+'/',
         orakuploader_ckeditor         : true,
         orakuploader_use_dragndrop            : true,
@@ -544,9 +520,9 @@
     });
 
     function editphoto(path){
-        $('#editphoto').parent().html('<div id="editphoto" orakuploader="on"></div>');
+        $('#promotion_picture_edit').parent().html('<div id="promotion_picture_edit" orakuploader="on"></div>');
         if(path){
-            $('#editphoto').orakuploader({
+            $('#promotion_picture_edit').orakuploader({
                 orakuploader_path         : url+'/',
                 orakuploader_ckeditor         : true,
                 orakuploader_use_dragndrop            : true,
@@ -563,7 +539,7 @@
                 orakuploader_attach_images: [path],
             });
         }else{
-            $('#editphoto').orakuploader({
+            $('#promotion_picture_edit').orakuploader({
                 orakuploader_path         : url+'/',
                 orakuploader_ckeditor         : true,
                 orakuploader_use_dragndrop            : true,
@@ -580,6 +556,6 @@
             });
         }
     }
-</script> --}}
+</script>
 <script>$("#static").select2();</script>
 @endsection

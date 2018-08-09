@@ -71,11 +71,24 @@ class PromotionController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        return $data;
+
         $data['created_at'] = date('Y-m-d H:i:s');
-        $photo = $request->photo;
-        if(isset($photo[0])){   $data['promotion_image'] = $photo[0]; }
-        unset($data['photo']);
+        $photo = $request->promotion_picture;
+        $product_items = $request->promotion_item;
+        $qty = $request->qty;
+        unset($data['promotion_item']);
+        foreach($product_items as $key => $item){
+            $data['promotion_item'][] = [
+                'product_id' => $item,
+                'qty' => $qty[$key]
+            ];
+        }
+        // return $data['promotion_item'];
+        $data['promotion_item'] = json_encode($data['promotion_item']);
+
+        if(isset($photo[0])){   $data['promotion_picture'] = $photo[0]; }
+        unset($data['promotion_picture']);
+        unset($data['qty']);
         \DB::beginTransaction();
         try {
             if( \App\Models\promotions::insert($data) ){
