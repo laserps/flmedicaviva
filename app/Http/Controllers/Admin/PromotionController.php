@@ -24,6 +24,22 @@ class PromotionController extends Controller
     public function dataTable(){//Datatable
         $result = \App\Models\Promotions::select();
         return Datatables::of($result)
+        ->editColumn('promotion_picture',function($rec){
+            return "<img src='".asset('uploads/temp/'.$rec->promotion_picture)."' width='150'>";
+        })
+        ->editColumn('promotion_item',function($rec){
+            $str='';
+            $a = json_decode($rec->promotion_item);
+            foreach($a as $key=>$pi){
+                $str .= ($key+1).".) ";
+                $str .= \App\Models\Products::where('product_id',$pi->product_id)->first()->product_name;
+                $str .= "(".$pi->qty.")";
+                if(count($a)!=$key+1){
+                    $str .= "<hr>";
+                } 
+            }
+            return $str;
+        })
         ->editColumn('status',function($rec){
             $str ='<select name="status" onchange="changeStatus('.$rec->promotion_id.',this.value);">';
             if($rec->status=="T"){
@@ -48,7 +64,7 @@ class PromotionController extends Controller
             return $str;
         })
         ->addIndexColumn()
-        ->rawColumns(['status', 'action'])
+        ->rawColumns(['status', 'action','promotion_picture','promotion_item'])
         ->make(true);
     }
 
@@ -87,7 +103,7 @@ class PromotionController extends Controller
         $data['promotion_item'] = json_encode($data['promotion_item']);
 
         if(isset($photo[0])){   $data['promotion_picture'] = $photo[0]; }
-        unset($data['promotion_picture']);
+        // unset($data['promotion_picture']);
         unset($data['qty']);
         \DB::beginTransaction();
         try {
@@ -143,10 +159,24 @@ class PromotionController extends Controller
         $id = $request['promotion_id'];
         unset($request['promotion_id']);
         $data = $request->all();
-        $photo = $request->editphoto;
-        // return $photo;
-        if(isset($photo)){   $data['promotion_image'] = $photo[0]; }else{ $data['promotion_image'] = NULL; }
-        unset($data['editphoto']);
+
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $photo = $request->promotion_picture_edit;
+        $product_items = $request->promotion_item;
+        $qty = $request->qty;
+        unset($data['promotion_item']);
+        foreach($product_items as $key => $item){
+            $data['promotion_item'][] = [
+                'product_id' => $item,
+                'qty' => $qty[$key]
+            ];
+        }
+        // return $data['promotion_item'];
+        $data['promotion_item'] = json_encode($data['promotion_item']);
+
+        if(isset($photo[0])){   $data['promotion_picture'] = $photo[0]; }
+        unset($data['promotion_picture_edit']);
+        unset($data['qty']);
         \DB::beginTransaction();
         try {
             if( \App\Models\promotions::where("promotion_id",$id)->update($data) ){

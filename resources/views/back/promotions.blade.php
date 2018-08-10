@@ -10,6 +10,8 @@
     <link href="{{asset('global/dropzone/dropzone.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('global/orakuploader/orakuploader.css')}}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <style>
+    </style>
 @endsection
 
 @section('content')
@@ -31,14 +33,14 @@
                         </div>
                         <section class="example">
                             <div class="table-flip-scroll">
-                                <table class="table table-striped table-bordered table-hover flip-content table-sm" style="width:100%;" id="datatableAll">
+                                <table class="table table-striped table-bordered table-hover table-responsive" id="datatableAll">
                                     <thead>
                                         <tr>
                                             <th class="text-center">ลำดับ</th>
-                                            <th class="text-center">รูป{{$title}}</th>
-                                            <th class="text-center">ชื่อ{{$title}}</th>
-                                            <th class="text-center">ราคาขาย{{$title}}</th>
-                                            <th class="text-center">สินค้าใน{{$title}}</th>
+                                            <th class="text-center">รูป</th>
+                                            <th class="text-center">ชื่อ</th>
+                                            <th class="text-center">ราคาขาย</th>
+                                            <th class="text-center">สินค้า</th>
                                             <th class="text-center">วันที่เพิ่ม</th>
                                             <th class="text-center">สถานะ</th>
                                             <th class="text-center">การกระทำ</th>
@@ -397,8 +399,8 @@
                     $(".indexfirst input[name='qty[]']").val(value.qty);
                 }
             });
-            
-            editphoto(rec.promotion_image);
+
+            editphoto(rec.promotion.promotion_picture);
             $( "#formEdit input[name='promotion_id']" ).val( rec.promotion.promotion_id );
             $( "#formEdit input[name='promotion_name']" ).val( rec.promotion.promotion_name );
             $( "#formEdit input[name='sell_price']" ).val( rec.promotion.sell_price );
@@ -539,8 +541,8 @@
             { "data": "DT_Row_Index" , "name": "DT_Row_Index" , "className": "text-center", "orderable": false , "searchable": false },
             { "data": "promotion_picture" , "name":"promotion.promotion_picture" , "className": "text-center",},
             { "data": "promotion_name" , "name":"promotion.promotion_name" },
-            { "data": "promotion_item" , "name":"promotion.promotion_item" , "className": "text-ritght"},
             { "data": "sell_price" , "name":"promotion.sell_price" , "className": "text-ritght"},
+            { "data": "promotion_item" , "name":"promotion.promotion_item" , "className": "text-ritght"},
             { "data": "created_at" , "name":"created_at"},
             { "data": "status" , "name":"status" , "className": "text-center", "searchable": false},
             { "data": "action" , "name":"action" , "className": "text-center" ,"orderable": false, "searchable": false },
