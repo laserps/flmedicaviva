@@ -25,7 +25,7 @@ class StaticPageController extends Controller
 
     public function product()
     {
-        return \View::make('front.product');
+        return \View::make('front.product',['products'=>\App\Models\Products::paginate(8)]);
     }
 
     public function payment()
@@ -164,12 +164,12 @@ class StaticPageController extends Controller
                 $arr = [];
                 foreach($address as $k => $v) {
                     $v['customer_id'] = \Auth::id();
-                    if(!isset($v->status)) {
+                    if(!isset($v['status'])) {
                         $v['status'] = 'F';
                     }
                     $id = '';
                     if(isset($v['id'])) {
-                        $id = $v->id;
+                        $id = $v['id'];
                         unset($v['id']);
                         \App\Models\CustomerAddress::where('id',$id)->update($v);
                     } else {

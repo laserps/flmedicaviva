@@ -187,6 +187,8 @@ return [
         // Other service providers...
         Laravel\Socialite\SocialiteServiceProvider::class,
 
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
+
     ],
 
     /*
@@ -242,6 +244,9 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         //Socialite
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+
+        'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+
 
     ],
 

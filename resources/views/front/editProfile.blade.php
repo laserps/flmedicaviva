@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="register_content">
                     <div class="col-md-6 col-md-offset-3 col-sm-offset-3">
-                        <div class="register-page">
+                        <div class="/*register-page*/">
                                 <form id="updateUserData">
                                     {{ csrf_field() }}
                                     <div class="header-register text-center">
@@ -71,9 +71,9 @@
 
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                            <button type="button" class="btn brn-danger">ลบ</button>
+                                                <i class="fa fa-times del-address {{(sizeof($address)==1)?'hidden':''}}" style="float:right;" aria-hidden="true"></i>
                                         </div>
-                                        </div>
+                                    </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="address[{{$k}}][address]" placeholder="" value="{{$v->address}}" >
@@ -103,12 +103,14 @@
 
                                         @endforeach
                                         @endif
-                                        <div class="left-content">
-                                            <button type="button" class="add_address btn btn-info" id="add_address">เพิ่มที่อยู่</button>
-                                        </div>
+                                        <div class="col-sm-12 add_address">
+                                            <i class="fa fa-plus add_address" id="add_address"  aria-hidden="true"></i>
+                                    </div>
+                                    <div class="col-sm-12">
                                         <div class="center-content">
-                                            <input type="submit" value="บันทึก" class="btn-ghost btn-green">
+                                            <input type="submit" value="บันทึก" class="btn btn-success btn-lg">
                                         </div>
+                                    </div>
                                 </form>
                         </div>
 
@@ -126,8 +128,8 @@
 <script>
 var address_index = {{sizeof($address)}};
 $('#add_address').click(function(){
-    console.log(123);
-    $('body').find('div.address:last').append(`<div class="address">
+    $('body').find('.del-address').removeClass('hidden');
+    $('body').find('div.add_address').before(`<div class="address">
         <div class="col-sm-6">
             <label for="">ที่อยู่</label>
             <div class="form-group">
@@ -135,7 +137,7 @@ $('#add_address').click(function(){
             </div>
         </div>
         <div class="col-sm-6">
-            <button type="button" class="btn brn-danger">ลบ</button>
+        <i class="fa fa-times del-address" style="float:right;" aria-hidden="true"></i>
         </div>
         <div class="col-sm-12">
             <div class="form-group">
@@ -167,6 +169,15 @@ $('#add_address').click(function(){
 });
 $('body').on('click','.status',function() {
     $('body').find('.status').not(this).prop('checked',false);
+});
+$('body').on('click','.del-address',function(){
+    if($('body').find('.address').length>1) {
+        $(this).closest('.address').remove();
+    }
+    if($('body').find('.address').length==1) {
+        $('.del-address').addClass('hidden');
+        $('body').find('.status').prop('checked',true);
+    }
 });
 $('#updateUserData').submit(function (e) {
     e.preventDefault();
