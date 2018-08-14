@@ -35,7 +35,7 @@
                       <p></p>
                     </div>
                     <div>
-                      <button class="btn-ghost btn-green"> สั่งซื้อ </button>
+                      <button class="btn-ghost btn-green product_id" data-id="{{$v->product_id}}"> รายละเอียด </button>
                     </div>
                   </div>
                 </div>
@@ -169,4 +169,9 @@
 @endsection
 
 @section('js')
+<script type="text/javascript">
+    $('button.product_id').click(function() {
+        window.location.href = url_gb+'/productDetail/'+$(this).data('id');
+    });
+</script>
 @endsection

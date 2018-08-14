@@ -145,6 +145,8 @@ Route::get('/contactus','StaticPageController@contactus');
 Route::get('/howtobuy','StaticPageController@howtobuy');
 Route::get('/member','StaticPageController@member');
 Route::get('/editProfile','StaticPageController@memberEdit');
+Route::get('/productDetail/{id?}','StaticPageController@ProductDetail');
 Route::post('/contactus','StaticPageController@contactUsStore');
 Route::post('/member','StaticPageController@memberStore');
 Route::post('/updateUserData','StaticPageController@memberUpdate');
+Route::post('{product_id?}/addProduct/{qty?}','StaticPageController@addProduct');

@@ -201,4 +201,17 @@ class StaticPageController extends Controller
         $return['title'] = '';
         return json_encode($return);
     }
+
+    public function ProductDetail($id=null) {
+        if($id!=null) {
+            return \View::make('front.productdetail',['details'=>\App\Models\Products::find($id)]);
+        }
+        return redirect('product');
+    }
+
+    public function addProduct($product=null, $qty=null, Request $request) {
+        $product_detail = \App\Models\Products::find($product);
+        $cart = \Cart::add($product, $product_detail->product_name, $qty, $qty*$product_detail->sell_price);
+        dd($cart);
+    }
 }

@@ -122,9 +122,21 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="short_description" class="col-sm-2 col-form-label">รายละเอียดแบบย่อ{{$title}}</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="short_description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="description" class="col-sm-2 col-form-label">รายละเอียด{{$title}}</label>
                             <div class="col-sm-10">
                                 <textarea class="form-control" name="description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="properties" class="col-sm-2 col-form-label">คุณสมบัติ{{$title}}</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="properties" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -214,9 +226,21 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="short_description" class="col-sm-2 col-form-label">รายละเอียดแบบย่อ{{$title}}</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="short_description" id="short_description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="description" class="col-sm-2 col-form-label">รายละเอียด{{$title}}</label>
                             <div class="col-sm-10">
                                 <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="properties" class="col-sm-2 col-form-label">คุณสมบัติ{{$title}}</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="properties" id="properties" rows="3"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -383,6 +407,8 @@
             $( "#description" ).val( rec.description );
             $( "#category_id" ).val( rec.category_id );
             $( "#unit_id" ).val( rec.unit_id );
+            $( "#short_description" ).val( rec.short_description );
+            $( "#properties" ).val( rec.properties );
             //$( "#product_image" ).val(  );
             $("#modalEdit input[value="+rec.status+"]").prop('checked', true);
             $( "#modalEdit" ).modal( "show" );
