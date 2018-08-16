@@ -16,11 +16,11 @@ class OrdersController extends Controller
         $data['title'] = 'คำสั่งซื้อ';
         $data['menu'] = 'orders';
 
-        return view('back.order',$data);
+        return view('back.orders',$data);
     }
 
     public function dataTable(){//Datatable
-        $result = \App\Order::select();
+        $result = \App\Orders::select();
         return Datatables::of($result)
         ->editColumn('status',function($rec){
 
@@ -76,7 +76,7 @@ class OrdersController extends Controller
 
         \DB::beginTransaction();
         try {
-            if( \App\Order::insert($data) ){
+            if( \App\Orders::insert($data) ){
                 \DB::commit();
                 $return['type'] = 'success';
                 $return['text'] = 'สำเร็จ';
@@ -100,7 +100,7 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        return \App\Order::where('id',$id)->first();
+        return \App\Orders::where('id',$id)->first();
     }
 
     /**
@@ -133,7 +133,7 @@ class OrdersController extends Controller
         }
         \DB::beginTransaction();
         try {
-            if( \App\Order::where("id",$id)->update($data) ){
+            if( \App\Orders::where("id",$id)->update($data) ){
                 \DB::commit();
                 $return['type'] = 'success';
                 $return['text'] = 'สำเร็จ';
@@ -154,7 +154,7 @@ class OrdersController extends Controller
         $update = ["status" => $request->status];
         \DB::beginTransaction();
         try {
-            if( \App\Order::where('id',$request->id)->update($update) ){
+            if( \App\Orders::where('id',$request->id)->update($update) ){
                 \DB::commit();
                 $return['type'] = 'success';
                 $return['text'] = 'สำเร็จ';
@@ -180,7 +180,7 @@ class OrdersController extends Controller
     {
         \DB::beginTransaction();
         try {
-            if( \App\Order::where('id',$request->id)->delete() ){
+            if( \App\Orders::where('id',$request->id)->delete() ){
                 \DB::commit();
                 $return['type'] = 'success';
                 $return['text'] = 'สำเร็จ';
