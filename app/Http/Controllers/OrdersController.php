@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DataTables;
 
 class OrdersController extends Controller
 {
@@ -20,19 +21,33 @@ class OrdersController extends Controller
     }
 
     public function dataTable(){//Datatable
-        $result = \App\Orders::select();
+        $result = \App\Models\Orders::leftJoin('users', 'users.id', '=', 'orders.customer_id')
+        ->select('orders.*',\DB::raw('FORMAT(orders.sum_price,2) AS sumprice'),'users.name AS uname');
         return Datatables::of($result)
         ->editColumn('status',function($rec){
 
-            $str ='<select name="status" onchange="changeStatus('.$rec->id.',this.value);">';
-            if($rec->status=="T"){
-                $str .='<option value="T" selected>ทำงาน</option>';
-                $str .='<option value="F">ไม่ทำงาน</option>';
+            // <span class="badge badge-primary">Primary</span>
+            // <span class="badge badge-secondary">Secondary</span>
+            // <span class="badge badge-success">Success</span>
+            // <span class="badge badge-danger">Danger</span>
+            // <span class="badge badge-warning">Warning</span>
+            // <span class="badge badge-info">Info</span>
+            // <span class="badge badge-light">Light</span>
+            // <span class="badge badge-dark">Dark</span>
+
+            $str ='';
+            if($rec->status=="m"){
+                $str .='<span class="badge badge-primary">คำสั่งซื้อใหม่</span>';
+            }else if($rec->status=="d"){
+                $str .='<span class="badge badge-info">จ่ายเงินแล้ว</span>';
+            }else if($rec->status=="s"){
+                $str .='<span class="badge badge-success">เสร็จสิ้น</span>';
+            }else if($rec->status=="n"){
+                $str .='<span class="badge badge-warning">แจ้งการจ่ายเงิน</span>';
             }else{
-                $str .='<option value="T">ทำงาน</option>';
-                $str .='<option value="F" selected>ไม่ทำงาน</option>';
+                $str .='<span class="badge badge-danger">ยกเลิกคำสั่งซื้อ</span>';
             }
-            $str .='</select>';
+
             return $str;
 
         })
@@ -71,12 +86,11 @@ class OrdersController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $data['password'] = bcrypt($request->password);
         $data['created_at'] = date('Y-m-d H:i:s');
 
         \DB::beginTransaction();
         try {
-            if( \App\Orders::insert($data) ){
+            if( \App\Models\Orders::insert($data) ){
                 \DB::commit();
                 $return['type'] = 'success';
                 $return['text'] = 'สำเร็จ';
@@ -100,7 +114,7 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        return \App\Orders::where('id',$id)->first();
+        return \App\Models\Orders::where('id',$id)->first();
     }
 
     /**
@@ -126,14 +140,10 @@ class OrdersController extends Controller
         $id = $request['id'];
         unset($request['id']);
         $data = $request->all();
-        if(isset($data->password)){
-            $data['password'] = bcrypt($request->password);
-        }else{
-            unset($data['password']);
-        }
+
         \DB::beginTransaction();
         try {
-            if( \App\Orders::where("id",$id)->update($data) ){
+            if( \App\Models\Orders::where("id",$id)->update($data) ){
                 \DB::commit();
                 $return['type'] = 'success';
                 $return['text'] = 'สำเร็จ';
@@ -154,7 +164,7 @@ class OrdersController extends Controller
         $update = ["status" => $request->status];
         \DB::beginTransaction();
         try {
-            if( \App\Orders::where('id',$request->id)->update($update) ){
+            if( \App\Models\Orders::where('id',$request->id)->update($update) ){
                 \DB::commit();
                 $return['type'] = 'success';
                 $return['text'] = 'สำเร็จ';
@@ -180,7 +190,7 @@ class OrdersController extends Controller
     {
         \DB::beginTransaction();
         try {
-            if( \App\Orders::where('id',$request->id)->delete() ){
+            if( \App\Models\Orders::where('id',$request->id)->delete() ){
                 \DB::commit();
                 $return['type'] = 'success';
                 $return['text'] = 'สำเร็จ';
