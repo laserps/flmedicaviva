@@ -21,7 +21,6 @@
         <div class="page-header">
           <h4> {{$details->product_name}} </h4>
           <p>รายละเอียดสินค้า</p>
-          {{dd(\Cart::content())}}
         </div>
         <div class="col-md-12">
           <div class="caption">
@@ -86,7 +85,10 @@
                 '_token' : $("[name='_token']").val(),
             },
             success: function(rec) {
-
+                if(rec) {
+                    alert('เพิ่มสินค้าแล้ว');
+                    $('#qty').val(1);
+                }
             }
         })
     });

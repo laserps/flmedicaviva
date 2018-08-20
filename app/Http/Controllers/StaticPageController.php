@@ -30,6 +30,27 @@ class StaticPageController extends Controller
 
     public function payment()
     {
+        $insert = [
+            'order_no' => 1,
+            'sum_price' => str_replace(',','',\Cart::total()),
+            'customer_id' => \Auth::id(),
+            'status' => 'm',
+            'created_at' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y-m-d H:i:s'),
+        ];
+        $id = \App\Models\Orders::insertGetId($insert);
+        foreach(\Cart::content() as $k => $v) {
+            $detail = [
+                'order_id' => $id,
+                'product_id' => $v->id,
+                'promotion_id' => null,
+                'quantity' => $v->qty,
+                'created_at' => date('Y-m-d H:i:s'),
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+            \App\Models\OrderDetails::insert($detail);
+        }
+        \Cart::destroy();
         return \View::make('front.payment');
     }
 
@@ -211,7 +232,34 @@ class StaticPageController extends Controller
 
     public function addProduct($product=null, $qty=null, Request $request) {
         $product_detail = \App\Models\Products::find($product);
-        $cart = \Cart::add($product, $product_detail->product_name, $qty, $qty*$product_detail->sell_price);
-        dd($cart);
+        $check = 1;
+        $rowId = '';
+        if(sizeof(\Cart::content())>0) {
+            foreach(\Cart::content() as $k => $v) {
+                if($v->id==$product) {
+                    $check = 0;
+                    $rowId = $k;
+                }
+            }
+            if($check==0) {
+                \Cart::update($rowId, ['qty' => ($v->qty+$qty)]);
+            } else {
+                \Cart::add($product, $product_detail->product_name, $qty, $product_detail->sell_price,['img' => $product_detail->product_image]);
+            }
+        } else {
+            \Cart::add($product, $product_detail->product_name, $qty, $product_detail->sell_price,['img' => $product_detail->product_image]);
+        }
+        return 0;
+    }
+
+    public function Checkout() {
+        return \View::make('front.checkout',['details'=>\App\Models\Products::get()[0]]);
+    }
+
+    public function CheckoutStore(Request $request) {
+        foreach ($request->qty as $k => $v) {
+            \Cart::update($k, ['qty' => $v]);
+        }
+        return json_encode(\Cart::content());
     }
 }
