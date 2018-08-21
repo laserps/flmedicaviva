@@ -152,6 +152,7 @@ Route::get('/contactus','StaticPageController@contactus');
 Route::get('/howtobuy','StaticPageController@howtobuy');
 Route::get('/member','StaticPageController@member');
 Route::get('/editProfile','StaticPageController@memberEdit');
+Route::get('/paywithCreditCard','StaticPageController@paywithCreditCard');
 Route::get('/productDetail/{id?}','StaticPageController@ProductDetail');
 Route::get('/Checkout','StaticPageController@Checkout');
 Route::post('/contactus','StaticPageController@contactUsStore');
