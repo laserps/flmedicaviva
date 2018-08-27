@@ -11,16 +11,16 @@
     background: #fff;
 }
 
-    .wizard .nav-tabs {
-        position: relative;
-        margin: 40px auto;
-        margin-bottom: 0;
-        border-bottom-color: #e0e0e0;
-    }
+.wizard .nav-tabs {
+    position: relative;
+    margin: 40px auto;
+    margin-bottom: 0;
+    border-bottom-color: #e0e0e0;
+}
 
-    .wizard > div.wizard-inner {
-        position: relative;
-    }
+.wizard > div.wizard-inner {
+    position: relative;
+}
 
 .connecting-line {
     height: 2px;
@@ -107,9 +107,9 @@ span.round-tab:hover {
     padding: 0;
 }
 
-    .wizard .nav-tabs > li a:hover {
-        background: transparent;
-    }
+.wizard .nav-tabs > li a:hover {
+    background: transparent;
+}
 
 .wizard .tab-pane {
     position: relative;
@@ -196,7 +196,8 @@ span.round-tab:hover {
                     <form role="form">
                         <div class="tab-content">
                             <div class="tab-pane active" role="tabpanel" id="step1">
-                                <h3>Step 1</h3>
+                                <h3>ขั้นตอนที่ 1</h3>
+                                <p>ยืนยันรายการสินค้า</p>
                                 {{ csrf_field() }}
                                 @foreach(\Cart::content() as $k => $v)
                                 <div class="row" style="margin: 30px 0px;">
@@ -211,13 +212,12 @@ span.round-tab:hover {
                                         </div>
                                         <div class="col-md-12">
                                             <div class="caption">
-                                                <!-- <h5>สินค้าคงคลัง 9 ชิ้น </h5> -->
                                                 <label class="price-sale">{{number_format($details->sell_price,2)}} บาท</label>
                                                 <label class="price">{{number_format($details->product_price,2)}} บาท</label>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input type="number" name="qty[{{$k}}]" placeholder="จำนวน" min="1" value="{{$v->qty}}">
+                                        <div class="col-md-6">
+                                            <input type="number" class="form-control" name="qty[{{$k}}]" placeholder="จำนวน" min="1" value="{{$v->qty}}">
                                         </div>
                                     </div>
                                 </div>
@@ -227,8 +227,59 @@ span.round-tab:hover {
                                 </ul>
                             </div>
                             <div class="tab-pane" role="tabpanel" id="step2">
-                                <h3>Step 2</h3>
-                                <p>This is step 2</p>
+                                <h3>ขั้นตอนที่ 2</h3>
+                                <p>เลือกประเภทการชำระเงิน</p>
+                                <div class="container">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active" id="child-first"><a data-toggle="tab" href="#home">บัตรเครดิต</a></li>
+                                        <li><a data-toggle="tab" id="child-second" href="#menu1">แจ้งโอนเงิน</a></li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div id="home" class="tab-pane fade in active">
+                                            <h3>ชำระเงินผ่านบัตรเครดิต</h3>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="radio-inline"><input type="radio" value="visa" name="type" checked><img src="{{asset('images/visa.png')}}" height="30px" width="auto"></label>
+                                                    <label class="radio-inline"><input type="radio" value="mastercard" name="type"><img src="{{asset('images/mastercard.png')}}" height="30px" width="auto"></label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="code">เลขบัญชี</label>
+                                                    <input type="number" class="form-control" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="16" name="code" id="code" value="" placeholder="เลขบัญชี">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="cvv">CVV</label>
+                                                    <input type="number" class="form-control"oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="3" maxlength="3" name="code" id="cvv" value="" placeholder="CVV">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="col-md-6">
+                                                        <label for="dd">เดือน</label>
+                                                        <input type="number" class="form-control" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="2" name="dd" id="dd" value="" placeholder="DD">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="yyyy">ปี</label>
+                                                        <input type="number" class="form-control"oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="4" name="yyyy" id="yyyy" value="" placeholder="YYYY">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label for="firstname">ชื่อ</label>
+                                                    <input type="text" class="form-control" name="firstname" id="firstname" value="" placeholder="ชื่อ">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="lastname">นามสกุล</label>
+                                                    <input type="text" class="form-control" name="lastname" id="lastname" value="" placeholder="นามสกุล">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="menu1" class="tab-pane fade">
+                                            <h3>แจ้งโอนเงิน</h3>
+                                        </div>
+                                    </div>
+                                </div>
                                 <ul class="list-inline pull-right">
                                     <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
                                     <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
@@ -255,37 +306,37 @@ span.round-tab:hover {
         </div>
     </div>
     <!-- <div class="container">
-        <form id="checkout">
-            {{ csrf_field() }}
-            @foreach(\Cart::content() as $k => $v)
-            <div class="row" style="margin: 30px 0px;">
-                <div class="col-md-2">
-                    <div class="img-responsive">
-                        <img style="width:100%;" src="{{asset('uploads/temp/'.$v->options->img)}}" >
-                    </div>
-                </div>
-                <div class="col-md-10">
-                    <div class="page-header">
-                        <h4> {{$v->name}} </h4>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="caption">
-                            <h5>สินค้าคงคลัง 9 ชิ้น </h5>
-                            <label class="price-sale">{{number_format($details->sell_price,2)}} บาท</label>
-                            <label class="price">{{number_format($details->product_price,2)}} บาท</label>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <input type="number" name="qty[{{$k}}]" placeholder="จำนวน" min="1" value="{{$v->qty}}">
-                    </div>
-                </div>
-            </div>
-            @endforeach
-            <div class="row col-md-12 text-center">
-                <button type="submit" class="btn btn-success">ยืนยันรายการ</button>
-            </div>
-        </form> -->
-    </div>
+    <form id="checkout">
+    {{ csrf_field() }}
+    @foreach(\Cart::content() as $k => $v)
+    <div class="row" style="margin: 30px 0px;">
+    <div class="col-md-2">
+    <div class="img-responsive">
+    <img style="width:100%;" src="{{asset('uploads/temp/'.$v->options->img)}}" >
+</div>
+</div>
+<div class="col-md-10">
+<div class="page-header">
+<h4> {{$v->name}} </h4>
+</div>
+<div class="col-md-12">
+<div class="caption">
+<h5>สินค้าคงคลัง 9 ชิ้น </h5>
+<label class="price-sale">{{number_format($details->sell_price,2)}} บาท</label>
+<label class="price">{{number_format($details->product_price,2)}} บาท</label>
+</div>
+</div>
+<div class="col-md-12">
+<input type="number" name="qty[{{$k}}]" placeholder="จำนวน" min="1" value="{{$v->qty}}">
+</div>
+</div>
+</div>
+@endforeach
+<div class="row col-md-12 text-center">
+<button type="submit" class="btn btn-success">ยืนยันรายการ</button>
+</div>
+</form> -->
+</div>
 </section>
 {{-- end content --}}
 @endsection
@@ -308,39 +359,46 @@ $(document).ready(function () {
             alert('ไม่สามารถทำรายการได้');
         });
     });
-//Initialize tooltips
-$('.nav-tabs > li a[title]').tooltip();
+    //Initialize tooltips
+    $('.nav-tabs > li a[title]').tooltip();
 
-//Wizard
-$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+    //Wizard
+    $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 
-    var $target = $(e.target);
+        var $target = $(e.target);
 
-    if ($target.parent().hasClass('disabled')) {
-        return false;
-    }
-});
+        if ($target.parent().hasClass('disabled')) {
+            $('#child-second').find('input[type="number"],input[type="text"]').val('');
+        }
+    });
+    $('#child-first').click(function() {
+        $('#home').find('input[type="number"],input[type="text"]').val('');
+    });
 
-$(".next-step").click(function (e) {
+    $('#child-second').click(function() {
+        $('#menu1').find('input[type="number"],input[type="text"]').val('');
+    });
 
-    var $active = $('.wizard .nav-tabs li.active');
-    $active.next().removeClass('disabled');
-    nextTab($active);
+    $(".next-step").click(function (e) {
 
-});
-$(".prev-step").click(function (e) {
+        var $active = $('.wizard .nav-tabs li.active:first');
+        $active.next().removeClass('disabled');
+        nextTab($active);
 
-    var $active = $('.wizard .nav-tabs li.active');
-    prevTab($active);
+    });
+    $(".prev-step").click(function (e) {
 
-});
+        var $active = $('.wizard .nav-tabs li.active');
+        prevTab($active);
+
+    });
 });
 
 function nextTab(elem) {
-$(elem).next().find('a[data-toggle="tab"]').click();
+    $(elem).next().find('a[data-toggle="tab"]').click();
 }
 function prevTab(elem) {
-$(elem).prev().find('a[data-toggle="tab"]').click();
+    $(elem).prev().find('a[data-toggle="tab"]').click();
 }
 </script>
 @endsection
