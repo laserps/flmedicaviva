@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
+use Paypalpayment;
 
 class StaticPageController extends Controller
 {
@@ -30,6 +31,26 @@ class StaticPageController extends Controller
 
     public function payment()
     {
+        $insert = [
+            'order_no' => 1,
+            'sum_price' => str_replace(',','',\Cart::total()),
+            'customer_id' => \Auth::id(),
+            'status' => 'm',
+            'created_at' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y-m-d H:i:s'),
+        ];
+        $id = \App\Models\Orders::insertGetId($insert);
+        foreach(\Cart::content() as $k => $v) {
+            $detail = [
+                'order_id' => $id,
+                'product_id' => $v->id,
+                'promotion_id' => null,
+                'quantity' => $v->qty,
+                'created_at' => date('Y-m-d H:i:s'),
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+            \App\Models\OrderDetails::insert($detail);
+        }
         return \View::make('front.payment');
     }
 
@@ -211,7 +232,150 @@ class StaticPageController extends Controller
 
     public function addProduct($product=null, $qty=null, Request $request) {
         $product_detail = \App\Models\Products::find($product);
-        $cart = \Cart::add($product, $product_detail->product_name, $qty, $qty*$product_detail->sell_price);
-        dd($cart);
+        $check = 1;
+        $rowId = '';
+        if(sizeof(\Cart::content())>0) {
+            foreach(\Cart::content() as $k => $v) {
+                if($v->id==$product) {
+                    $check = 0;
+                    $rowId = $k;
+                }
+            }
+            if($check==0) {
+                \Cart::update($rowId, ['qty' => ($v->qty+$qty)]);
+            } else {
+                \Cart::add($product, $product_detail->product_name, $qty, $product_detail->sell_price,['img' => $product_detail->product_image]);
+            }
+        } else {
+            \Cart::add($product, $product_detail->product_name, $qty, $product_detail->sell_price,['img' => $product_detail->product_image]);
+        }
+        return 0;
+    }
+
+    public function Checkout() {
+        return \View::make('front.checkout',['details'=>\App\Models\Products::get()[0]]);
+    }
+
+    public function CheckoutStore(Request $request) {
+        foreach ($request->qty as $k => $v) {
+            \Cart::update($k, ['qty' => $v]);
+        }
+        return json_encode(\Cart::content());
+    }
+
+    /*
+    * Process payment using credit card
+    */
+    public function paywithCreditCard()
+    {
+        // ### Address
+        // Base Address object used as shipping or billing
+        // address in a payment. [Optional]
+        $shippingAddress = Paypalpayment::shippingAddress();
+        $shippingAddress->setLine1("3909 Witmer Road")
+            ->setLine2("Niagara Falls")
+            ->setCity("Niagara Falls")
+            ->setState("NY")
+            ->setPostalCode("14305")
+            ->setCountryCode("US")
+            ->setPhone("716-298-1822")
+            ->setRecipientName("Jhone");
+
+        // ### CreditCard
+        $card = Paypalpayment::creditCard();
+        $card->setType("visa")
+            ->setNumber("4758411877817150")
+            ->setExpireMonth("05")
+            ->setExpireYear("2019")
+            ->setCvv2("456")
+            ->setFirstName("Joe")
+            ->setLastName("Shopper");
+
+        // ### FundingInstrument
+        // A resource representing a Payer's funding instrument.
+        // Use a Payer ID (A unique identifier of the payer generated
+        // and provided by the facilitator. This is required when
+        // creating or using a tokenized funding instrument)
+        // and the `CreditCardDetails`
+        $fi = Paypalpayment::fundingInstrument();
+        $fi->setCreditCard($card);
+
+        // ### Payer
+        // A resource representing a Payer that funds a payment
+        // Use the List of `FundingInstrument` and the Payment Method
+        // as 'credit_card'
+        $payer = Paypalpayment::payer();
+        $payer->setPaymentMethod("credit_card")
+            ->setFundingInstruments([$fi]);
+
+        $item1 = Paypalpayment::item();
+        $item1->setName('Ground Coffee 40 oz')
+                ->setDescription('Ground Coffee 40 oz')
+                ->setCurrency('USD')
+                ->setQuantity(1)
+                ->setTax(0.3)
+                ->setPrice(7.50);
+
+        $item2 = Paypalpayment::item();
+        $item2->setName('Granola bars')
+                ->setDescription('Granola Bars with Peanuts')
+                ->setCurrency('USD')
+                ->setQuantity(5)
+                ->setTax(0.2)
+                ->setPrice(2);
+
+
+        $itemList = Paypalpayment::itemList();
+        $itemList->setItems([$item1,$item2])
+            ->setShippingAddress($shippingAddress);
+
+
+        $details = Paypalpayment::details();
+        $details->setShipping("1.2")
+                ->setTax("1.3")
+                //total of items prices
+                ->setSubtotal("17.5");
+
+        //Payment Amount
+        $amount = Paypalpayment::amount();
+        $amount->setCurrency("USD")
+                // the total is $17.8 = (16 + 0.6) * 1 ( of quantity) + 1.2 ( of Shipping).
+                ->setTotal("20")
+                ->setDetails($details);
+
+        // ### Transaction
+        // A transaction defines the contract of a
+        // payment - what is the payment for and who
+        // is fulfilling it. Transaction is created with
+        // a `Payee` and `Amount` types
+
+        $transaction = Paypalpayment::transaction();
+        $transaction->setAmount($amount)
+            ->setItemList($itemList)
+            ->setDescription("Payment description")
+            ->setInvoiceNumber(uniqid());
+
+        // ### Payment
+        // A Payment Resource; create one using
+        // the above types and intent as 'sale'
+
+        $payment = Paypalpayment::payment();
+
+        $payment->setIntent("sale")
+            ->setPayer($payer)
+            ->setTransactions([$transaction]);
+
+        try {
+            // ### Create Payment
+            // Create a payment by posting to the APIService
+            // using a valid ApiContext
+            // The return object contains the status;
+            $payment->create(Paypalpayment::apiContext());
+            \Cart::destroy();
+        } catch (\PPConnectionException $ex) {
+            return response()->json(["error" => $ex->getMessage()], 400);
+        }
+
+        return response()->json([$payment->toArray()], 200);
     }
 }

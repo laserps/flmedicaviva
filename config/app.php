@@ -163,6 +163,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Anouar\Paypalpayment\PaypalpaymentServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -246,7 +247,7 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
-
+        'Paypalpayment'   => Anouar\Paypalpayment\Facades\PaypalPayment::class,
 
     ],
 

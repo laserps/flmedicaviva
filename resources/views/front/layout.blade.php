@@ -28,7 +28,7 @@
 
     @include('front.theme.footer')
     <!-- JS FILES -->
-    
+
     <script src="{{asset('js/jquery/dist/jquery.min.js')}}"></script>
     <script src="{{asset('front/js/jquery.flexslider-min.js')}}"></script>
     {{--  <script src="{{asset('front/js/bootstrap.min.js')}}"></script>  --}}
@@ -40,6 +40,9 @@
     <script type="text/javascript">
         var url_gb = '{{url("")}}';
         var asset_gb = '{{asset("")}}';
+        $('#checkout').click(function() {
+            window.location.href = url_gb+'/Checkout';
+        });
     </script>
     @yield('js')
     </body>

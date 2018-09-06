@@ -21,7 +21,6 @@
         <div class="page-header">
           <h4> {{$details->product_name}} </h4>
           <p>รายละเอียดสินค้า</p>
-          {{dd(\Cart::content())}}
         </div>
         <div class="col-md-12">
           <div class="caption">
@@ -33,10 +32,12 @@
             <label class="price">{{number_format($details->product_price,2)}} บาท</label>
           </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-9">
             {{ csrf_field() }}
-            <input type="number" name="qty" id="qty" placeholder="จำนวน" min="1" value="1">
-          <button class="btn-ghost btn-green product_id" data-id="{{$details->product_id}}">สั่งซื้อสินค้า</button>
+            <input type="number" class="form-control" name="qty" id="qty" placeholder="จำนวน" min="1" value="1">
+        </div>
+        <div class="col-md-3">
+            <button class="btn-ghost btn-green product_id btn" data-id="{{$details->product_id}}">สั่งซื้อสินค้า</button>
         </div>
 
       </div>
@@ -86,7 +87,10 @@
                 '_token' : $("[name='_token']").val(),
             },
             success: function(rec) {
-
+                if(rec) {
+                    alert('เพิ่มสินค้าแล้ว');
+                    $('#qty').val(1);
+                }
             }
         })
     });

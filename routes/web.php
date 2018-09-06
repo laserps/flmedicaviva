@@ -99,6 +99,13 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('/categories/delete','Admin\CategoriesController@destroy');
         Route::resource('/categories','Admin\CategoriesController');
 
+        //banks controller
+        Route::get('/banks/dataTable','Admin\BankController@dataTable');
+        Route::post('/banks/update','Admin\BankController@update');
+        Route::post('/banks/changeStatus','Admin\BankController@changeStatus');
+        Route::post('/banks/delete','Admin\BankController@destroy');
+        Route::resource('/banks','Admin\BankController');
+
         //units controller
         Route::get('/units/dataTable','Admin\UnitsController@dataTable');
         Route::post('/units/update','Admin\UnitsController@update');
@@ -147,8 +154,11 @@ Route::get('/contactus','StaticPageController@contactus');
 Route::get('/howtobuy','StaticPageController@howtobuy');
 Route::get('/member','StaticPageController@member');
 Route::get('/editProfile','StaticPageController@memberEdit');
+Route::get('/paywithCreditCard','StaticPageController@paywithCreditCard');
 Route::get('/productDetail/{id?}','StaticPageController@ProductDetail');
+Route::get('/Checkout','StaticPageController@Checkout');
 Route::post('/contactus','StaticPageController@contactUsStore');
 Route::post('/member','StaticPageController@memberStore');
 Route::post('/updateUserData','StaticPageController@memberUpdate');
+Route::post('/Checkout','StaticPageController@CheckoutStore');
 Route::post('{product_id?}/addProduct/{qty?}','StaticPageController@addProduct');

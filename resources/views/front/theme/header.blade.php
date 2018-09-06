@@ -94,57 +94,36 @@
                       <i class="fa fa-shopping-cart cart-icon"></i><span class="drop-cart">2</span>
                       </div>
                       <div class="shopping-cart-total">
-                        <label class="lighter-text">Total: ฿2,229.97</label>
+                        <label class="lighter-text">Total: ฿{{sizeof(\Cart::content())>0?\Cart::subtotal():0}}</label>
                       </div>
                     </div>
                   </div>
-
+                  @foreach(\Cart::content() as $k => $v)
                   <div class="dropdown-item">
                     <div class="shopping-cart-header">
                       <div class="row row-drop-cart">
                         <div class="shopping-cart-img">
                           <div class="cart-img-frame">
-                          <img src="http://localhost:8012/flmedicaviva/public/front/viva/images/pd3.jpg" alt="...">
+                          <img src="{{asset('uploads/temp/'.$v->options->img)}}" alt="...">
                           </div>
                         </div>
                         <div class="shopping-cart-info">
                           <div class="shopping-cart-title">
-                            <label>สินค้า 3</label>
+                            <label>{{str_limit($v->name,25)}}</label>
                           </div>
                            <div class="shopping-cart-detail">
-                              <label>฿299</label>
-                              <label class="pull-right"> 1 ชิ้น</label>
+                              <label>฿{{$v->price}}</label>
+                              <label class="pull-right"> {{$v->qty}} ชิ้น</label>
                            </div>
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  <div class="dropdown-item">
-                    <div class="shopping-cart-header">
-                      <div class="row row-drop-cart">
-                        <div class="shopping-cart-img">
-                          <div class="cart-img-frame">
-                          <img src="http://localhost:8012/flmedicaviva/public/front/viva/images/pd3.jpg" alt="...">
-                          </div>
-                        </div>
-                        <div class="shopping-cart-info">
-                          <div class="shopping-cart-title">
-                            <label>สินค้า 3</label>
-                          </div>
-                           <div class="shopping-cart-detail">
-                              <label>฿299</label>
-                              <label class="pull-right"> 1 ชิ้น</label>
-                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
+                  @endforeach
                 <div class="dropdown-item">
                     <div class="shopping-cart-header">
                       <div class="row row-drop-cart text-center">
-                        <button class="btn-ghost btn-green"> Checkout </button>
+                        <button class="btn-ghost btn-green" id="checkout"> Checkout </button>
                       </div>
                   </div>
                 </div>
