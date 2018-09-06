@@ -53,11 +53,14 @@ class OrdersController extends Controller
         })
         ->addColumn('action',function($rec){
             $str = "";
-            $str .= ' <button class="btn btn-warning btn-sm edit-data" data-id="'.$rec->id.'">
+            $str .= ' <button class="btn btn-primary btn-sm checkmoney" data-id="'.$rec->order_id.'">
+                        <i class="fa fa-money" aria-hidden="true"></i> ตรวจสอบเงิน
+                    </button> ';
+            $str .= ' <button class="btn btn-warning btn-sm edit-data" data-id="'.$rec->order_id.'">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> แก้ไข
                     </button> ';
                     
-            $str .= ' <button class="btn  btn-danger btn-sm delete-data" data-id="'.$rec->id.'">
+            $str .= ' <button class="btn  btn-danger btn-sm delete-data" data-id="'.$rec->order_id.'">
                         <i class="fa fa-trash" aria-hidden="true"></i> ลบ
                     </button> ';
             return $str;
@@ -115,6 +118,14 @@ class OrdersController extends Controller
     public function show($id)
     {
         return \App\Models\Orders::where('id',$id)->first();
+    }
+
+    public function checkmoney($id)
+    {
+        return \App\Models\Payments::where('order_id',$id)
+        ->leftjoin('bank','bank.bank_id','payments.bank_id')
+        ->select('payments.*','bank.bank_name as bname')
+        ->get();
     }
 
     /**
@@ -177,6 +188,49 @@ class OrdersController extends Controller
             $return['text'] = 'ไม่สำเร็จ'."\n".$e->getMessage();
         }
         $return['title'] = 'แก้ไขข้อมูล';
+        return $return;
+    }
+
+    public function paymentConfirm(Request $request)
+    {
+        \DB::beginTransaction();
+        try {
+
+            $listPayment = \App\Models\Payments::where('order_id',$request->order_id)->get();
+            
+            foreach($listPayment as $payment){
+
+                if(isset($request->payment_id)){
+                    if(in_array($payment->payment_id,$request->payment_id)){
+                    \App\Models\Payments::where([
+                        ['order_id', '=', $payment->order_id],
+                        ['payment_id', '=', $payment->payment_id],
+                    ])
+                    ->update(['payment_confirm' => 'T']);
+                    }
+                }else{
+                    \App\Models\Payments::where([
+                        // ['order_id', '=', $payment->order_id],
+                        ['payment_id', '=', $payment->payment_id],
+                    ])
+                    ->update(['payment_confirm' => 'F']); 
+                }
+
+            }
+
+            if($listPayment){
+                \DB::commit();
+                $return['type'] = 'success';
+                $return['text'] = 'สำเร็จ';
+            }else{
+                throw new $e;
+            }
+        } catch (\Exception $e){
+            \DB::rollBack();
+            $return['type'] = 'error';
+            $return['text'] = 'ไม่สำเร็จ'."\n".$e->getMessage();
+        }
+        $return['title'] = 'อัพเดทข้อมูล';
         return $return;
     }
 

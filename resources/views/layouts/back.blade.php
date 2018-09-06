@@ -87,6 +87,9 @@
         <script src="{{ asset('vendor/laravel-filemanager/js/jquery.form.min.js') }}"></script>
         <script src="{{ asset('vendor/laravel-filemanager/js/dropzone.min.js') }}"></script>
 
+        {{-- pace.js --}}
+        <script src="{{asset('global/pace-1.0.2/pace.min.js')}}"></script>
+
         <script src="{{asset('back/js/vendor.js')}}"></script>
         <script src="{{asset('back/js/app.js')}}"></script>
 

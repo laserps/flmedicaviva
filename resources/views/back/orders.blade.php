@@ -99,6 +99,31 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Checkpayment -->
+    <div class="modal fade" id="modalCheckMoney" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>ตรวจสอบยอดเงิน</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <form id="formCheckMoney" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div id="table-money"></div>              
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
+                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </article>
 
 @endsection
@@ -107,6 +132,7 @@
 {{--  select2  --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script type="text/javascript">
+    {{-- Start Add --}}
     $( "#formAdd" ).validate({
         rules: {
             order_name: "required",
@@ -295,6 +321,65 @@
         });
     }
     {{--  End Status  --}}
+
+    {{-- Start CheckPaymentMoney --}}
+    $( "#formCheckMoney" ).validate({
+        rules: {
+            {{-- order_name: "required",
+            sell_price: "required",
+            'qty[]': "required", --}}
+        },
+        messages: {
+            {{-- order_name: "กรุณาระบุ",
+            sell_price: "กรุณาระบุ",
+            'qty[]': "กรุณาระบุ", --}}
+        },
+        errorElement: "span",
+        errorPlacement: function ( error, element ) {
+            // Add the `help-block` class to the error element
+            error.addClass( "help-block" );
+            if ( element.prop( "type" ) === "checkbox" ) {
+                error.insertAfter( element.parent( "label" ) );
+            } else {
+                error.insertAfter( element );
+            }
+        },
+        highlight: function ( element, errorClass, validClass ) {
+            $( element ).parents('.form-group').addClass( "has-error" ).removeClass( "has-success" );
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $( element ).parents('.form-group').addClass( "has-success" ).removeClass( "has-error" );
+        },
+        submitHandler: function(form){
+            var btn = $(form).find('[type="submit"]');
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                method : "POST",
+                url : url+"/admin/orders/paymentConfirm",
+                dataType : 'json',
+                data : $(form).serialize()
+            }).done(function(rec){
+                console.log(rec);
+                {{-- if(rec.type == 'success'){
+                    swal({
+                        confirmButtonText:'ตกลง',title: rec.title,text: rec.text,type: rec.type
+                    });
+                    $('#modalAdd').modal('hide');
+                    dataTable.api().ajax.reload();
+                    form.reset();
+                }else{
+                    swal({
+                        confirmButtonText:'ตกลง',title: rec.title,text: rec.text,type: rec.type
+                    });
+                } --}}
+            });
+
+        }
+    });    
+    {{-- End CheckPaymentMoney --}}
 </script>
 
 <!-- datatables -->
@@ -335,63 +420,56 @@
         }
     });
 </script>
-<script src="{{asset('global/orakuploader/jquery-ui.min.js')}}"></script>
+{{-- <script src="{{asset('global/orakuploader/jquery-ui.min.js')}}"></script>
 <script src="{{asset('global/orakuploader/orakuploader.js')}}"></script>
-<script src="{{asset('global/orakuploader/adminusage.js')}}"></script>
-<script>
-    $('#order_picture').orakuploader({
-        orakuploader_path         : url+'/',
-        orakuploader_ckeditor         : true,
-        orakuploader_use_dragndrop            : true,
-        orakuploader_use_sortable   : false,
-        orakuploader_main_path : 'uploads/temp/',
-        orakuploader_thumbnail_path : 'uploads/temp/',
-        orakuploader_thumbnail_real_path : asset+'uploads/temp/',
-        orakuploader_loader_image       : asset+'images/loader.gif',
-        orakuploader_no_image       : asset+'images/no-image.jpg',
-        orakuploader_add_label       : 'เลือกรูปภาพ',
-        orakuploader_use_rotation: true,
-        orakuploader_maximum_uploads : 1,
-        orakuploader_hide_on_exceed : true,
-    });
+<script src="{{asset('global/orakuploader/adminusage.js')}}"></script> --}}
 
-    function editphoto(path){
-        $('#order_picture_edit').parent().html('<div id="order_picture_edit" orakuploader="on"></div>');
-        if(path){
-            $('#order_picture_edit').orakuploader({
-                orakuploader_path         : url+'/',
-                orakuploader_ckeditor         : true,
-                orakuploader_use_dragndrop            : true,
-                orakuploader_use_sortable   : true,
-                orakuploader_main_path : 'uploads/temp/',
-                orakuploader_thumbnail_path : 'uploads/temp/',
-                orakuploader_thumbnail_real_path : asset+'uploads/temp/',
-                orakuploader_loader_image       : asset+'images/loader.gif',
-                orakuploader_no_image       : asset+'images/noimage.jpg',
-                orakuploader_add_label       : 'เลือกรูปภาพ',
-                orakuploader_use_rotation: true,
-                orakuploader_hide_on_exceed : true, 
-                orakuploader_maximum_uploads : 0,
-                orakuploader_attach_images: [path],
-            });
-        }else{
-            $('#order_picture_edit').orakuploader({
-                orakuploader_path         : url+'/',
-                orakuploader_ckeditor         : true,
-                orakuploader_use_dragndrop            : true,
-                orakuploader_use_sortable   : true,
-                orakuploader_main_path : 'uploads/temp/',
-                orakuploader_thumbnail_path : 'uploads/temp/',
-                orakuploader_thumbnail_real_path : asset+'uploads/temp/',
-                orakuploader_loader_image       : asset+'images/loader.gif',
-                orakuploader_no_image       : asset+'images/no-image.jpg',
-                orakuploader_add_label       : 'เลือกรูปภาพ',
-                orakuploader_use_rotation: true,
-                orakuploader_hide_on_exceed : true, 
-                orakuploader_maximum_uploads : 1,
-            });
-        }
-    }
+<script>
+    $('body').on('click', '.checkmoney', function () {
+        var id = $(this).data('id');
+        {{-- console.log(id); --}}
+        $.ajax({
+            method: "GET",
+            url: url + "/admin/checkmoney/" + id,
+            dataType: 'json'
+        }).done(function (rec) {
+
+            if(rec.length>0){
+                var money=parseFloat(0).toFixed(2);
+                var str = "<table class='table table-bordered table-hover'>";
+                str += "<thead><tr><th class='text-center'>เลือก</th><th class='text-center'>ลำดับ</th><th class='text-center'>วัน-เวลา</th><th class='text-center'>บัญชี</th><th class='text-center'>จำนวน(บาท)</th></tr></thead>";
+                str += "<tbody>";
+                str += "<input name='order_id' type='hidden' value='"+id+"'>";   
+                $.each(rec, function(index,value){
+                    money = parseFloat(money) + parseFloat(value.pay_amount);
+                    str += "<tr>";
+                        str += "<td class='text-center'>";
+                            str += "<label><input name='payment_id[]' type='checkbox' value='"+value.payment_id+"'></label>";
+                        str += "</td>";
+                        str += "<td>";
+                            str += index+1;
+                        str += "</td>";
+                        str += "<td>";
+                                str += value.pay_time;
+                            str += "</td>";
+                        str += "<td>";
+                            str += value.bname;
+                        str += "</td>";
+                        str += "<td>";
+                            str += parseFloat(value.pay_amount).toFixed(2);
+                        str += "</td>";
+                    str += "</tr>";
+                });
+                str += "</tbody>";
+                str += "<tfoot><tr><th class='text-right' colspan='4'>รวม</th><th>"+ parseFloat(money).toFixed(2) +"</th></tr></tfoot>";
+                str += "</table>";
+                $('#table-money').html(str);
+            }else{
+                $('#table-money').html('<center><h1>ไม่พบข้อมูลการแจ้งโอนเงิน</h1></center>');
+            }
+            $("#modalCheckMoney").modal("show");
+        });
+    });
 </script>
 <script>$("#static").select2();</script>
 @endsection

@@ -107,7 +107,9 @@ Route::group(['middleware' => 'admin'], function () {
         Route::resource('/units','Admin\UnitsController');
 
         //orders controller
+        Route::get('/checkmoney/{id}','OrdersController@checkmoney');
         Route::get('/orders/dataTable','OrdersController@dataTable');
+        Route::post('/orders/paymentConfirm','OrdersController@paymentConfirm');
         Route::post('/orders/update','OrdersController@update');
         Route::post('/orders/changeStatus','OrdersController@changeStatus');
         Route::post('/orders/delete','OrdersController@destroy');
